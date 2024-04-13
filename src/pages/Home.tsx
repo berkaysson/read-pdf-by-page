@@ -1,7 +1,12 @@
 import React from 'react'
+import { PageInputForm } from '../components/main/forms/PageInputForm'
+import { PDFDisplay } from '../components/main/displays/PDFDisplay'
 
-export const Home = () => {
+export const Home: React.FC = () => {
   return (
-    <div>Home</div>
+    <div>
+        <PageInputForm />
+        <PDFDisplay />
+    </div>
   )
 }
