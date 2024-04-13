@@ -1,10 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home } from "./pages/Home";
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
-import PublicRoute from "./components/routes/PublicRoutes";
-import PrivateRoute from "./components/routes/PrivateRoutes";
+import { BrowserRouter } from "react-router-dom";
 import { ProfileProvider } from "./context/profile.context";
+import { Layout } from "./components/routes/Layout";
 
 function App() {
   return (
@@ -14,32 +10,7 @@ function App() {
           <main>
             <nav />
             <section>
-              <Routes>
-                <Route
-                  path="/login"
-                  element={
-                    <PublicRoute>
-                      <Login />
-                    </PublicRoute>
-                  }
-                />
-                <Route
-                  path="/register"
-                  element={
-                    <PublicRoute>
-                      <Register />
-                    </PublicRoute>
-                  }
-                />
-                <Route
-                  path="/"
-                  element={
-                    <PrivateRoute>
-                      <Home />
-                    </PrivateRoute>
-                  }
-                />
-              </Routes>
+              <Layout />
             </section>
           </main>
         </BrowserRouter>
