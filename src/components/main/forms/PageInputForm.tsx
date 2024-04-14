@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { PDFContext } from "../../../context/pdf.context";
+import { ProfileContext } from "../../../context/profile.context";
 
 export const PageInputForm = () => {
+  const [pageNumber, setPageNumber] = useState<number | null>(null);
+  const { activePDFTitle } = useContext(PDFContext);
+  const { updatePageOfPdf } = useContext(ProfileContext);
+
+  const handlePageNumberChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = parseInt(event.target.value);
+    setPageNumber(isNaN(value) ? null : value);
+  };
+
+  const handleSavePageButton = () => {
+    if (activePDFTitle && pageNumber) {
+      updatePageOfPdf(activePDFTitle, pageNumber);
+    }
+  };
+
   return (
     <div className="flex flex-row">
       <form className="flex flex-col">
-        <label htmlFor="pageNum" className="text-sm">Enter Page Number:</label>
+        <label htmlFor="pageNum" className="text-sm">
+          Enter Page Number:
+        </label>
         <input
           type="number"
           placeholder="enter to save page"
@@ -12,9 +33,12 @@ export const PageInputForm = () => {
           min="0"
           name="pageNum"
           className="border-2 border-solid"
+          onChange={handlePageNumberChange}
         />
+        <button onClick={handleSavePageButton} type="button">
+          Save
+        </button>
       </form>
-      <button type="button">Save</button>
     </div>
   );
 };
