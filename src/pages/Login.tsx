@@ -1,7 +1,5 @@
-import React from 'react'
+import { signInWithGoogle } from "../utilities/signInUtilities";
 
-export const Login = () => {
-  return (
-    <div>Login</div>
-  )
-}
+export const Login: React.FC = () => {
+  return <button onClick={signInWithGoogle}>Sign In With Google</button>;
+};
