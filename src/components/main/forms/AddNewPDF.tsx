@@ -1,9 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProfileContext } from "../../../context/profile.context";
 import { SavedPdf } from "../../../context/profile.types";
+import pdfToText from "../../../utilities/pdfToText.js";
+import { PDFContext } from "../../../context/pdf.context";
 
 export const AddNewPDF = () => {
   const { addSavedPdf } = useContext(ProfileContext);
+  const { setActivePDFContent, setActivePDFTitle } = useContext(PDFContext);
   const [selectedPdf, setSelectedPdf] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,17 +18,27 @@ export const AddNewPDF = () => {
 
   const handleUpload = () => {
     if (selectedPdf) {
-      // Extract necessary information from the selected PDF file
       const newPdf: SavedPdf = {
         title: selectedPdf.name,
-        savedPage: 0, // Set initial saved page to 0
-        updateDate: new Date().toISOString(), // Set update date to current time
+        savedPage: 0,
+        updateDate: new Date().toISOString(),
       };
 
-      // Call addSavedPdf function to add or update the PDF in the user profile
       addSavedPdf(newPdf);
     }
   };
+
+  useEffect(() => {
+    if (selectedPdf) {
+      pdfToText(selectedPdf)
+        .then((pdf) => {
+          setActivePDFContent(pdf)
+          setActivePDFTitle(selectedPdf.name);
+        })
+        .catch((error) => console.error("Failed to extract text from pdf"));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPdf]);
 
   return (
     <div>
@@ -35,7 +48,7 @@ export const AddNewPDF = () => {
         accept=".pdf"
         onChange={handleFileChange}
       />
-      <button onClick={handleUpload}>Upload PDF</button>
+      <button onClick={handleUpload}>Save PDF</button>
     </div>
   );
 };
