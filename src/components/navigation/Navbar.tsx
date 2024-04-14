@@ -3,6 +3,7 @@ import { logout } from "../../utilities/signOutUtilities";
 import { ProfileContext } from "../../context/profile.context";
 import { Link } from "react-router-dom";
 import { AddNewPDF } from "../main/forms/AddNewPDF";
+import { SavedPDFsList } from "../main/displays/SavedPDFsList";
 
 export const Navbar = () => {
   const { profile } = useContext(ProfileContext);
@@ -13,7 +14,7 @@ export const Navbar = () => {
         <>
           <div>
             <h2>Last Pdfs</h2>
-            <ul>List of pdf title and saved page</ul>
+            <SavedPDFsList />
           </div>
           <div>
             <AddNewPDF />
