@@ -20,7 +20,7 @@ export const useAuthListener = (
         onValue(userRef, (snap) => {
           const userData = snap.val();
 
-          if (!userData) {
+          if (!userData || !userData.savedPdfs) {
             const initialProfile: UserProfile = {
               ...userData,
               uid: authObj.uid,
