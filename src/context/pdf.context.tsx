@@ -44,6 +44,8 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
     setActivePDFContent(null);
     setActivePDFTitle(null);
     setActivePDFPage(0);
+    const fileInput = document.getElementById("fileInput");
+    if (fileInput instanceof HTMLInputElement) fileInput.value = "";
   };
 
   return (
