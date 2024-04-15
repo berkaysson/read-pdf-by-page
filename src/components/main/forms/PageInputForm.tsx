@@ -22,20 +22,20 @@ export const PageInputForm = () => {
 
   return (
     <div className="flex flex-row">
-      <form className="flex flex-col">
-        <label htmlFor="pageNum" className="text-sm">
+      <form className="flex flex-row justify-center w-full gap-4">
+        <label htmlFor="pageNum" className="flex flex-col gap-2 text-sm">
           Enter Page Number:
+          <input
+            type="number"
+            placeholder="enter to save page"
+            required
+            min="0"
+            name="pageNum"
+            className="border-2 border-solid input"
+            onChange={handlePageNumberChange}
+          />
         </label>
-        <input
-          type="number"
-          placeholder="enter to save page"
-          required
-          min="0"
-          name="pageNum"
-          className="border-2 border-solid"
-          onChange={handlePageNumberChange}
-        />
-        <button onClick={handleSavePageButton} type="button">
+        <button className="btn" onClick={handleSavePageButton} type="button">
           Save
         </button>
       </form>

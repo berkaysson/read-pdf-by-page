@@ -17,9 +17,11 @@ export const PDFDisplay: React.FC = () => {
   return (
     <div>
       <div>
-        <h3>{activePDFTitle && `${activePDFTitle} - ${activePDFPage}`}</h3>
+        <h3 className="mb-4 text-2xl font-semibold">
+          {activePDFTitle && `${activePDFTitle} - ${activePDFPage}`}
+        </h3>
       </div>
-      <article>
+      <article className="flex flex-col gap-4">
         {pages.map((page, index) => (
           <p
             key={"p" + index}

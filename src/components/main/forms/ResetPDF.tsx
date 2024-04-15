@@ -5,7 +5,7 @@ export const ResetPDF = () => {
   const { resetPDF } = useContext(PDFContext);
   return (
     <div>
-      <button type="button" onClick={resetPDF}>
+      <button className="btn" type="button" onClick={resetPDF}>
         Reset PDF
       </button>
     </div>

@@ -8,6 +8,7 @@ export const AddNewPDF = () => {
   const { addSavedPdf } = useContext(ProfileContext);
   const { setActivePDFContent, setActivePDFTitle } = useContext(PDFContext);
   const [selectedPdf, setSelectedPdf] = useState<File | null>(null);
+  const [isFileLoading, setIsFileLoading] = useState<boolean>(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -30,10 +31,12 @@ export const AddNewPDF = () => {
 
   useEffect(() => {
     if (selectedPdf) {
+      setIsFileLoading(true);
       pdfToText(selectedPdf)
         .then((pdf) => {
-          setActivePDFContent(pdf)
+          setActivePDFContent(pdf);
           setActivePDFTitle(selectedPdf.name);
+          setIsFileLoading(false);
         })
         .catch((error) => console.error("Failed to extract text from pdf"));
     }
@@ -41,14 +44,22 @@ export const AddNewPDF = () => {
   }, [selectedPdf]);
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
+      <label
+        className="items-center justify-center p-4 text-5xl text-center align-middle rounded-md cursor-pointer bg-secondary text-primary hover:opacity-90"
+        htmlFor="fileInput"
+      >
+        {isFileLoading ? "..." : "+"}
+      </label>
       <input
         type="file"
         id="fileInput"
         accept=".pdf"
         onChange={handleFileChange}
       />
-      <button onClick={handleUpload}>Save PDF</button>
+      <button className="btn" onClick={handleUpload}>
+        Save PDF
+      </button>
     </div>
   );
 };
