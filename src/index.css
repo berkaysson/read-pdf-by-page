@@ -19,3 +19,23 @@ code {
 .hide-page{
   display: none;
 }
+
+.btn {
+  @apply px-4 py-2 font-bold rounded bg-primary text-light;
+}
+
+.btn:hover{
+  opacity: .8;
+}
+
+.input{
+  @apply px-4 py-2 rounded-sm bg-light text-primary
+}
+
+.input:hover{
+  opacity: .8;
+}
+
+input[type="file"] {
+  display: none;
+}
