@@ -47,3 +47,24 @@ export const updateSavedPdfSavedPage = (
   }
   return profile;
 };
+
+export const deleteSavedPdf = (
+  pdfTitle: string,
+  database: Database,
+  profile: UserProfile
+) => {
+  const existingPdfIndex = profile.savedPdfs.findIndex(
+    (pdf) => pdf.title === pdfTitle
+  );
+  if (existingPdfIndex >= 0) {
+    const updatedPdfs = [...profile.savedPdfs];
+    updatedPdfs.splice(existingPdfIndex, 1);
+    const updatedProfile = { ...profile, savedPdfs: updatedPdfs };
+    set(ref(database, `users/${profile.uid}`), updatedProfile);
+
+    return updatedProfile;
+  } else {
+    alert("Pdf is not existing in database.");
+  }
+  return profile;
+};

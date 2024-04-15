@@ -15,4 +15,5 @@ export interface ProfileContextType {
   isLoading: boolean;
   addSavedPdf: (newPdf: SavedPdf) => void;
   updatePageOfPdf: (title: string, page: number) => void;
+  deletePdf: (title: string) => void;
 }

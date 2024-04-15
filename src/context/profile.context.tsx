@@ -5,6 +5,7 @@ import { ProfileContextType, SavedPdf, UserProfile } from "./profile.types";
 import { useAuthListener } from "../utilities/useAuthListener";
 import {
   addOrUpdateSavedPdf,
+  deleteSavedPdf,
   updateSavedPdfSavedPage,
 } from "../utilities/pdfUtilities";
 
@@ -13,6 +14,7 @@ export const ProfileContext = createContext<ProfileContextType>({
   isLoading: true,
   addSavedPdf: () => {},
   updatePageOfPdf: () => {},
+  deletePdf: () => {},
 });
 
 interface ProfileProviderProps {
@@ -44,9 +46,16 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
     }
   };
 
+  const deletePdf = (title: string) => {
+    if (profile) {
+      const updatedProfile = deleteSavedPdf(title, database, profile);
+      setProfile(updatedProfile);
+    }
+  };
+
   return (
     <ProfileContext.Provider
-      value={{ profile, isLoading, addSavedPdf, updatePageOfPdf }}
+      value={{ profile, isLoading, addSavedPdf, updatePageOfPdf, deletePdf }}
     >
       {children}
     </ProfileContext.Provider>
