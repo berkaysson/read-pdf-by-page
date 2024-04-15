@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { ProfileContext } from "../../../context/profile.context";
 
 export const SavedPDFsList: React.FC = () => {
-  const { profile } = useContext(ProfileContext);
+  const { profile, deletePdf } = useContext(ProfileContext);
   const savedPdfsList = profile?.savedPdfs;
   if (savedPdfsList) {
     savedPdfsList.sort(
@@ -23,6 +23,13 @@ export const SavedPDFsList: React.FC = () => {
           </p>
           Page:
           <span className="font-bold"> {pdfItem.savedPage}</span>
+          {}
+          <button
+            onClick={() => deletePdf(pdfItem.title)}
+            className="float-right mt-1 btn"
+          >
+            X
+          </button>
         </li>
       ))}
     </ul>
