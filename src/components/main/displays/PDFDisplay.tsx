@@ -21,12 +21,13 @@ export const PDFDisplay: React.FC = () => {
       </div>
       <article>
         {pages.map((page, index) => (
-          <>
-            <p key={"p" + index} id={"page-" + (index + 1)}>
-              {page}
-            </p>
-            <br key={"break" + index} />
-          </>
+          <p
+            key={"p" + index}
+            id={"page-" + (index + 1)}
+            className={index + 1 >= activePDFPage ? "" : "hide-page"}
+          >
+            {page}
+          </p>
         ))}
       </article>
     </div>
