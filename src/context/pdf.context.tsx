@@ -14,6 +14,7 @@ export const PDFContext = createContext<PDFContextType>({
   activePDFTitle: null,
   setActivePDFTitle: () => {},
   activePDFPage: 0,
+  resetPDF: () => {},
 });
 
 interface PDFProviderProps {
@@ -39,6 +40,12 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
     }
   }, [profile, activePDFTitle]);
 
+  const resetPDF = () => {
+    setActivePDFContent(null);
+    setActivePDFTitle(null);
+    setActivePDFPage(0);
+  };
+
   return (
     <PDFContext.Provider
       value={{
@@ -47,6 +54,7 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
         activePDFTitle,
         setActivePDFTitle,
         activePDFPage,
+        resetPDF,
       }}
     >
       {children}
