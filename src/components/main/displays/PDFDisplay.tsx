@@ -3,7 +3,8 @@ import { PDFContext } from "../../../context/pdf.context";
 
 export const PDFDisplay: React.FC = () => {
   const [pages, setPages] = useState<string[]>([]);
-  const { activePDFContent } = useContext(PDFContext);
+  const { activePDFContent, activePDFTitle, activePDFPage } =
+    useContext(PDFContext);
 
   useEffect(() => {
     if (activePDFContent) {
@@ -15,14 +16,19 @@ export const PDFDisplay: React.FC = () => {
 
   return (
     <div>
-      {pages.map((page, index) => (
-        <>
-          <p key={"p"+index} id={"page-" + (index + 1)}>
-            {page}
-          </p>
-          <br key={"break"+index} />
-        </>
-      ))}
+      <div>
+        <h3>{activePDFTitle && `${activePDFTitle} - ${activePDFPage}`}</h3>
+      </div>
+      <article>
+        {pages.map((page, index) => (
+          <>
+            <p key={"p" + index} id={"page-" + (index + 1)}>
+              {page}
+            </p>
+            <br key={"break" + index} />
+          </>
+        ))}
+      </article>
     </div>
   );
 };
