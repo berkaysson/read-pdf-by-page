@@ -17,7 +17,7 @@ export const PDFDisplay: React.FC = () => {
     <div>
       {pages.map((page, index) => (
         <>
-          <p key={index} id={"page-" + (index + 1)}>
+          <p key={"p"+index} id={"page-" + (index + 1)}>
             {page}
           </p>
           <br key={"break"+index} />
