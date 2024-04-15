@@ -8,11 +8,11 @@ import { useState } from "react";
 function App() {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(true);
   return (
-    <div className="h-screen">
+    <div className="h-screen bg-secondary">
       <ProfileProvider>
         <PDFProvider>
           <BrowserRouter>
-            <main className="flex flex-row flex-1 text-primary bg-secondary">
+            <main className="flex flex-row flex-1 text-primary">
               <div>
                 <Navbar isNavOpen={isNavOpen} />
                 <button
