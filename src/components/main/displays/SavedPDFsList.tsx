@@ -26,7 +26,7 @@ export const SavedPDFsList: React.FC = () => {
           {}
           <button
             onClick={() => deletePdf(pdfItem.title)}
-            className="float-right mt-1 btn"
+            className="float-right mt-1 btn btn-alt"
           >
             X
           </button>

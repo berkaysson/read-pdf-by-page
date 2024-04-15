@@ -27,7 +27,7 @@ export const Navbar: React.FC<{ isNavOpen: boolean }> = ({ isNavOpen }) => {
               <AddNewPDF />
               <ResetPDF />
             </div>
-            <button className="btn" onClick={logout}>
+            <button className="btn btn-alt" onClick={logout}>
               Log Out
             </button>
           </>
