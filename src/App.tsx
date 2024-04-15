@@ -12,7 +12,7 @@ function App() {
       <ProfileProvider>
         <PDFProvider>
           <BrowserRouter>
-            <main className="flex flex-row flex-1 text-primary">
+            <main className="flex flex-row flex-1 text-primary bg-secondary">
               <div>
                 <Navbar isNavOpen={isNavOpen} />
                 <button
