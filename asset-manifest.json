@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/read-pdf-by-page/static/css/main.488177ce.css",
+    "main.js": "/read-pdf-by-page/static/js/main.40297c71.js",
+    "index.html": "/read-pdf-by-page/index.html",
+    "main.488177ce.css.map": "/read-pdf-by-page/static/css/main.488177ce.css.map",
+    "main.40297c71.js.map": "/read-pdf-by-page/static/js/main.40297c71.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.488177ce.css",
+    "static/js/main.40297c71.js"
+  ]
+}
