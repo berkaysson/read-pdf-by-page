@@ -26,6 +26,7 @@ export const Layout = () => {
         }
       />
       <Route
+        index
         path="/"
         element={
           <PrivateRoute>
