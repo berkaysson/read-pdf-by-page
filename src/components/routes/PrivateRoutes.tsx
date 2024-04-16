@@ -16,7 +16,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     // If data is loaded and no user profile exists (user is not authenticated)
     if (!isLoading && !profile) {
       // Redirect unauthenticated users to the signin route ("/signin")
-      navigate("/login");
+      navigate("/read-pdf-by-page/login");
     }
   }, [isLoading, profile, navigate]); // Dependency array to trigger the effect
 

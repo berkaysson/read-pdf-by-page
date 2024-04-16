@@ -10,7 +10,7 @@ export const Layout = () => {
   return (
     <Routes>
       <Route
-        path="/login"
+        path="/read-pdf-by-page/login"
         element={
           <PublicRoute>
             <Login />
@@ -18,7 +18,7 @@ export const Layout = () => {
         }
       />
       <Route
-        path="/register"
+        path="/read-pdf-by-page/register"
         element={
           <PublicRoute>
             <Register />
@@ -27,7 +27,7 @@ export const Layout = () => {
       />
       <Route
         index
-        path="/"
+        path="/read-pdf-by-page"
         element={
           <PrivateRoute>
             <Home />

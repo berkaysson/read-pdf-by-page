@@ -18,7 +18,7 @@ const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
     // If data is loaded and a user profile exists (user is authenticated)
     if (!isLoading && profile) {
       // Redirect authenticated users to the home route ("/")
-      navigate("/");
+      navigate("/read-pdf-by-page");
     }
   }, [isLoading, profile, navigate]); // Dependency array to trigger the effect
 
