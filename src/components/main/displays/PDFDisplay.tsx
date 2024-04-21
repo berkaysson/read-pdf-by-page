@@ -21,7 +21,7 @@ export const PDFDisplay: React.FC = () => {
           {activePDFTitle && `${activePDFTitle} - ${activePDFPage}`}
         </h3>
       </div>
-      <article className="flex flex-col gap-2">
+      <article className="flex flex-col gap-2 text-justify">
         {pages.map((page, index) => (
           <p
             key={"p" + index}
@@ -29,7 +29,7 @@ export const PDFDisplay: React.FC = () => {
             className={index + 1 >= activePDFPage ? "" : "hide-page"}
           >
             {page}
-            <span className="float-right mt-6 mr-6 text-sm" key={"pageNum-" + index}>{index + 1}</span>
+            <span className="float-right mt-6 mr-2 text-sm" key={"pageNum-" + index}>{index + 1}</span>
           </p>
         ))}
       </article>
