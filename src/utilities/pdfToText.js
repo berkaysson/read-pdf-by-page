@@ -3,7 +3,7 @@ import { pdfjs } from "react-pdf";
 // Path to the pdf.worker.js file
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const pdfToText = async (file) => {
+const pdfToText = async (file, setProgress) => {
   try {
     // Create a blob URL for the PDF file
     const blobUrl = URL.createObjectURL(file);
@@ -21,6 +21,9 @@ const pdfToText = async (file) => {
       const textContent = await page.getTextContent();
       const pageText = textContent.items.map((item) => item.str).join(" ");
       extractedTextByPage.push(pageText);
+
+      const progress = (pageNumber / numPages) * 100;
+      setProgress(progress);
     }
     // Clean up the blob URL
     URL.revokeObjectURL(blobUrl);
