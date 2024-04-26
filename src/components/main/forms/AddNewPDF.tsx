@@ -51,13 +51,18 @@ export const AddNewPDF = () => {
         htmlFor="fileInput"
       >
         {isFileLoading ? "..." : "+"}
-        {<p className="absolute text-sm right-10">{isFileLoading && progress.toFixed(0)+"%"}</p>}
+        {
+          <p className="absolute text-sm right-10">
+            {isFileLoading && progress.toFixed(0) + "%"}
+          </p>
+        }
       </label>
       <input
         type="file"
         id="fileInput"
         accept=".pdf"
         onChange={handleFileChange}
+        disabled={isFileLoading}
       />
       <button className="btn" onClick={handleUpload}>
         Save PDF
