@@ -9,7 +9,7 @@ export const AddNewPDF = () => {
   const { setActivePDFContent, setActivePDFTitle } = useContext(PDFContext);
   const [selectedPdf, setSelectedPdf] = useState<File | null>(null);
   const [isFileLoading, setIsFileLoading] = useState<boolean>(false);
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(100);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -52,9 +52,12 @@ export const AddNewPDF = () => {
       >
         {isFileLoading ? "..." : "+"}
         {
-          <p className="absolute text-sm right-10">
-            {isFileLoading && progress.toFixed(0) + "%"}
-          </p>
+          <div
+            className="p-2 mt-2 text-xs text-left border-solid rounded text-secondary border-light bg-primary opacity-80"
+            style={{ width: `${progress}%` }}
+          >
+            {isFileLoading ? progress.toFixed(0) + "%" : "Add new PDF"}
+          </div>
         }
       </label>
       <input
