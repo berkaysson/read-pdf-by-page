@@ -19,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isNavOpen, navRef, setIsNavOpen 
     isNavOpen ? "left-0" : "-left-3/4 md:-left-1/2"
   } h-screen duration-300 z-50 fixed top-0 w-3/4 md:w-1/2 flex-shrink-0 bg-light text-primary`;
   return (
-    <nav className={navClass} ref={navRef}>
+    <nav aria-hidden="true" className={navClass} ref={navRef}>
       <div className="flex shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] flex-col justify-between gap-4 h-full px-4 py-4 overflow-x-hidden overflow-y-auto align-middle">
         <Link to="/" className="text-3xl font-bold md:text-5xl">
           RPBP
