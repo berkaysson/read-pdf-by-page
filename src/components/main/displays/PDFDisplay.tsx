@@ -29,7 +29,7 @@ export const PDFDisplay: React.FC = () => {
             className={index + 1 >= activePDFPage ? "" : "hide-page"}
           >
             {page}
-            <span className="float-right mt-6 mr-2 text-sm" key={"pageNum-" + index}>{index + 1}</span>
+            <span aria-hidden="true" className="float-right mt-6 mr-2 text-sm" key={"pageNum-" + index}>{index + 1}</span>
           </p>
         ))}
       </article>
