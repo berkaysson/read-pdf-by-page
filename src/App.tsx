@@ -6,7 +6,7 @@ import { PDFProvider } from "./context/pdf.context";
 import { useRef, useState } from "react";
 
 function App() {
-  const [isNavOpen, setIsNavOpen] = useState<boolean>(true);
+  const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const navRef = useRef<HTMLElement>(null);
 
   const handleOutsideClick = (event: MouseEvent) => {
