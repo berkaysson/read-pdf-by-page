@@ -38,6 +38,7 @@ export const updateSavedPdfSavedPage = (
   if (existingPdfIndex >= 0) {
     const updatedPdfs = [...profile.savedPdfs];
     updatedPdfs[existingPdfIndex].savedPage = newPdfPage;
+    updatedPdfs[existingPdfIndex].updateDate = new Date().toISOString();
     const updatedProfile = { ...profile, savedPdfs: updatedPdfs };
     set(ref(database, `users/${profile.uid}`), updatedProfile);
 
