@@ -6,5 +6,6 @@ export interface PDFContextType {
   activePDFTitle: string | null;
   setActivePDFTitle: Dispatch<SetStateAction<string | null>>;
   activePDFPage: number;
+  setActivePDFPage: Dispatch<SetStateAction<number>>;
   resetPDF: () => void;
 }

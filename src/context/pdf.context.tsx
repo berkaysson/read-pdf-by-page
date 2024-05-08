@@ -14,6 +14,7 @@ export const PDFContext = createContext<PDFContextType>({
   activePDFTitle: null,
   setActivePDFTitle: () => {},
   activePDFPage: 0,
+  setActivePDFPage: () => {},
   resetPDF: () => {},
 });
 
@@ -56,6 +57,7 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
         activePDFTitle,
         setActivePDFTitle,
         activePDFPage,
+        setActivePDFPage,
         resetPDF,
       }}
     >

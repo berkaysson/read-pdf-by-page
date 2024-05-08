@@ -4,7 +4,7 @@ import { ProfileContext } from "../../../context/profile.context";
 
 export const PageInputForm = () => {
   const [pageNumber, setPageNumber] = useState<number | null>(null);
-  const { activePDFTitle } = useContext(PDFContext);
+  const { activePDFTitle, setActivePDFPage } = useContext(PDFContext);
   const { updatePageOfPdf } = useContext(ProfileContext);
 
   const handlePageNumberChange = (
@@ -17,6 +17,12 @@ export const PageInputForm = () => {
   const handleSavePageButton = () => {
     if (activePDFTitle && pageNumber) {
       updatePageOfPdf(activePDFTitle, pageNumber);
+    }
+  };
+
+  const handleGoToPageClick = () => {
+    if (pageNumber) {
+      setActivePDFPage(pageNumber);
     }
   };
 
@@ -35,9 +41,14 @@ export const PageInputForm = () => {
             onChange={handlePageNumberChange}
           />
         </label>
-        <button className="btn" onClick={handleSavePageButton} type="button">
-          Save
-        </button>
+        <div className="flex flex-col gap-2">
+          <button type="button" className="btn" onClick={handleGoToPageClick}>
+            Go
+          </button>
+          <button className="btn" onClick={handleSavePageButton} type="button">
+            Save
+          </button>
+        </div>
       </form>
     </div>
   );
