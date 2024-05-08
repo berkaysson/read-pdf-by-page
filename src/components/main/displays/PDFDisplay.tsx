@@ -21,7 +21,8 @@ export const PDFDisplay: React.FC = () => {
           {activePDFTitle && `${activePDFTitle} - ${activePDFPage}`}
         </h3>
       </div>
-      <article className="flex flex-col gap-2 text-justify">
+      <article className="flex flex-col gap-2 p-2 text-justify rounded-md shadow-sm bg-light">
+        {pages.length<1 && <span className="italic">Add new PDF Please</span>}
         {pages.map((page, index) => (
           <p
             key={"p" + index}
