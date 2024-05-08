@@ -21,7 +21,7 @@ export const PageInputForm = () => {
   };
 
   return (
-    <div className="flex flex-row">
+    <div className="fixed flex flex-row px-4 py-2 rounded-sm shadow-md top-4 bg-light right-2">
       <form className="flex flex-row justify-center w-full gap-4">
         <label htmlFor="pageNum" className="flex flex-col gap-2 text-sm">
           Enter Page Number:

@@ -15,7 +15,7 @@ export const PDFDisplay: React.FC = () => {
   }, [activePDFContent]);
 
   return (
-    <div>
+    <div className="mt-20">
       <div>
         <h3 className="mb-4 text-2xl font-semibold">
           {activePDFTitle && `${activePDFTitle} - ${activePDFPage}`}
@@ -27,6 +27,7 @@ export const PDFDisplay: React.FC = () => {
             key={"p" + index}
             id={"page-" + (index + 1)}
             className={index + 1 >= activePDFPage ? "" : "hide-page"}
+            lang="tr"
           >
             {page}
             <span aria-hidden="true" className="float-right mt-6 mr-2 text-sm" key={"pageNum-" + index}>{index + 1}</span>
