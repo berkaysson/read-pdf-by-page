@@ -15,7 +15,7 @@ export const PDFDisplay: React.FC = () => {
   }, [activePDFContent]);
 
   return (
-    <div className="mt-20">
+    <div className="mt-8 mb-24">
       <div>
         <h3 className="mb-4 text-2xl font-semibold">
           {activePDFTitle && `${activePDFTitle} - ${activePDFPage}`}
