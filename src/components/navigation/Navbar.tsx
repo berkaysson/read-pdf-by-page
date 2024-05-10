@@ -5,14 +5,21 @@ import { Link } from "react-router-dom";
 import { AddNewPDF } from "../main/forms/AddNewPDF";
 import { SavedPDFsList } from "../main/displays/SavedPDFsList";
 import { ResetPDF } from "../main/forms/ResetPDF";
+import { FcBookmark } from "react-icons/fc";
+import { FcMenu } from "react-icons/fc";
+import { FcMinus } from "react-icons/fc";
 
 interface NavbarProps {
   isNavOpen: boolean;
   navRef: React.RefObject<HTMLElement>;
-  setIsNavOpen: Dispatch<SetStateAction<boolean>>
+  setIsNavOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ isNavOpen, navRef, setIsNavOpen }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  isNavOpen,
+  navRef,
+  setIsNavOpen,
+}) => {
   const { profile } = useContext(ProfileContext);
 
   const navClass = `${
@@ -21,8 +28,11 @@ export const Navbar: React.FC<NavbarProps> = ({ isNavOpen, navRef, setIsNavOpen 
   return (
     <nav aria-hidden="true" className={navClass} ref={navRef}>
       <div className="flex shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] flex-col justify-between gap-4 h-full px-4 py-4 overflow-x-hidden overflow-y-auto align-middle">
-        <Link to="/" className="text-3xl font-bold md:text-5xl">
-          RPBP
+        <Link
+          to="/"
+          className="flex items-center justify-center text-3xl font-bold md:text-5xl"
+        >
+          <FcBookmark className="text-md" /> <span>RPBP</span>
         </Link>
         {profile && (
           <>
@@ -44,7 +54,11 @@ export const Navbar: React.FC<NavbarProps> = ({ isNavOpen, navRef, setIsNavOpen 
         onClick={() => setIsNavOpen(!isNavOpen)}
         className="absolute top-0 mt-4 -right-14 btn"
       >
-        {isNavOpen ? "x":"+"}
+        {isNavOpen ? (
+          <FcMinus className="text-lg pointer-events-none" />
+        ) : (
+          <FcMenu className="text-lg pointer-events-none" />
+        )}
       </button>
     </nav>
   );

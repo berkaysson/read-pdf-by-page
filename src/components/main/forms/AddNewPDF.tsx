@@ -3,6 +3,7 @@ import { ProfileContext } from "../../../context/profile.context";
 import { SavedPdf } from "../../../context/profile.types";
 import pdfToText from "../../../utilities/pdfToText.js";
 import { PDFContext } from "../../../context/pdf.context";
+import { FcAddDatabase } from "react-icons/fc";
 
 export const AddNewPDF = () => {
   const { addSavedPdf } = useContext(ProfileContext);
@@ -67,8 +68,12 @@ export const AddNewPDF = () => {
         onChange={handleFileChange}
         disabled={isFileLoading}
       />
-      <button className="btn" onClick={handleUpload}>
-        Save PDF
+      <button
+        className="flex items-center justify-center gap-2 btn"
+        onClick={handleUpload}
+      >
+        <FcAddDatabase className="text-lg" />
+        <span>Save PDF</span>
       </button>
     </div>
   );

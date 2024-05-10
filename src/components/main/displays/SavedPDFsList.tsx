@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { ProfileContext } from "../../../context/profile.context";
+import { FcDeleteDatabase } from "react-icons/fc";
 
 export const SavedPDFsList: React.FC = () => {
   const { profile, deletePdf } = useContext(ProfileContext);
@@ -28,7 +29,7 @@ export const SavedPDFsList: React.FC = () => {
             onClick={() => deletePdf(pdfItem.title)}
             className="float-right mt-1 btn btn-alt"
           >
-            X
+            <FcDeleteDatabase className="text-lg" />
           </button>
         </li>
       ))}
