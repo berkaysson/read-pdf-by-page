@@ -12,7 +12,7 @@ export const SavedPDFsList: React.FC = () => {
   }
 
   return (
-    <ul className="flex flex-col gap-2">
+    <ul className="flex flex-col gap-2 p-1 overflow-y-scroll rounded-sm shadow-sm h-4/5">
       {savedPdfsList?.map((pdfItem, index) => (
         <li
           className="p-2 rounded-md shadow-sm bg-secondary"
