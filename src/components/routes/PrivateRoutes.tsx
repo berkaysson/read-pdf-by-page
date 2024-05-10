@@ -21,7 +21,9 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   }, [isLoading, profile, navigate]); // Dependency array to trigger the effect
 
   // Conditional rendering based on loading state
-  return <>{isLoading ? <p>Loading...</p> : children}</>;
+  return (
+    <>{isLoading ? <p className="text-center ">Loading...</p> : children}</>
+  );
 };
 
 export default PrivateRoute;
