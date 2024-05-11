@@ -7,7 +7,7 @@ import { FcAddDatabase } from "react-icons/fc";
 
 export const AddNewPDF = () => {
   const { addSavedPdf } = useContext(ProfileContext);
-  const { setActivePDFContent, setActivePDFTitle } = useContext(PDFContext);
+  const { activePDFTitle,setActivePDFContent, setActivePDFTitle } = useContext(PDFContext);
   const [selectedPdf, setSelectedPdf] = useState<File | null>(null);
   const [isFileLoading, setIsFileLoading] = useState<boolean>(false);
   const [progress, setProgress] = useState(100);
@@ -71,6 +71,7 @@ export const AddNewPDF = () => {
       <button
         className="flex items-center justify-center gap-2 btn"
         onClick={handleUpload}
+        disabled={activePDFTitle === "" || !activePDFTitle}
       >
         <FcAddDatabase className="text-lg" />
         <span>Save PDF</span>
