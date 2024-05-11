@@ -3,9 +3,14 @@ import { ProfileContext } from "../../../context/profile.context";
 import { FcDeleteDatabase } from "react-icons/fc";
 import { SavedPdf } from "../../../context/profile.types";
 import { storage } from "../../../firebase.config";
+import { getPdfFromStorage } from "../../../utilities/pdfUtilities";
+import { PDFContext } from "../../../context/pdf.context";
+import { FcDownload } from "react-icons/fc";
 
 export const SavedPDFsList: React.FC = () => {
   const { profile, deletePdf } = useContext(ProfileContext);
+  const { setNewPDF, isFileLoading, setFileLoadingType, setIsFileLoading } =
+    useContext(PDFContext);
   const savedPdfsList = profile?.savedPdfs;
   if (savedPdfsList) {
     savedPdfsList.sort(
@@ -16,6 +21,14 @@ export const SavedPDFsList: React.FC = () => {
 
   const handleDelete = (pdf: SavedPdf) => {
     deletePdf(pdf, storage);
+  };
+
+  const handleDownload = async (pdf: SavedPdf) => {
+    if (!profile) return;
+    setIsFileLoading(true);
+    setFileLoadingType("Downloading...");
+    const downloadedPdf = await getPdfFromStorage(profile, pdf, storage);
+    if (downloadedPdf) setNewPDF(downloadedPdf);
   };
 
   return (
@@ -30,12 +43,19 @@ export const SavedPDFsList: React.FC = () => {
           </p>
           Page:
           <span className="font-bold"> {pdfItem.savedPage}</span>
-          {}
           <button
+            disabled={isFileLoading}
             onClick={() => handleDelete(pdfItem)}
             className="float-right mt-1 btn btn-alt"
           >
             <FcDeleteDatabase className="text-lg" />
+          </button>
+          <button
+            disabled={isFileLoading}
+            className="float-right mt-1 mr-1 btn btn-alt"
+            onClick={() => handleDownload(pdfItem)}
+          >
+            <FcDownload className="text-lg" />
           </button>
         </li>
       ))}
