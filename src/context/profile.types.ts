@@ -1,4 +1,5 @@
 import { FirebaseStorage } from "firebase/storage";
+import { Dispatch, SetStateAction } from "react";
 
 export interface SavedPdf {
   title: string;
@@ -16,7 +17,11 @@ export interface UserProfile {
 export interface ProfileContextType {
   profile: UserProfile | null;
   isLoading: boolean;
-  handleAddSavedPdf: (newPdf: SavedPdf, file: File) => void;
+  handleAddSavedPdf: (
+    newPdf: SavedPdf,
+    file: File,
+    setProgress: Dispatch<SetStateAction<number>>
+  ) => void;
   updatePageOfPdf: (title: string, page: number) => void;
   deletePdf: (pdf: SavedPdf, storage: FirebaseStorage) => void;
 }
