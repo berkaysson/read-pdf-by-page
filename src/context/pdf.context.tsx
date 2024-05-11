@@ -5,8 +5,9 @@ import {
   useEffect,
   useState,
 } from "react";
-import { PDFContextType } from "./pdf.types";
+import { FileLoadingType, PDFContextType } from "./pdf.types";
 import { ProfileContext } from "./profile.context";
+import pdfToText from "../utilities/pdfToText";
 
 export const PDFContext = createContext<PDFContextType>({
   activePDFContent: null,
@@ -16,6 +17,13 @@ export const PDFContext = createContext<PDFContextType>({
   activePDFPage: 0,
   setActivePDFPage: () => {},
   resetPDF: () => {},
+  setNewPDF: () => {},
+  isFileLoading: false,
+  progress: 0,
+  setIsFileLoading: () => {},
+  setProgress: () => {},
+  setFileLoadingType: () => {},
+  fileLoadingType: "...",
 });
 
 interface PDFProviderProps {
@@ -30,6 +38,9 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
   );
   const [activePDFTitle, setActivePDFTitle] = useState<string | null>(null);
   const [activePDFPage, setActivePDFPage] = useState<number>(0);
+  const [isFileLoading, setIsFileLoading] = useState<boolean>(false);
+  const [progress, setProgress] = useState(0);
+  const [fileLoadingType, setFileLoadingType] = useState<FileLoadingType>("...");
 
   useEffect(() => {
     if (profile) {
@@ -45,8 +56,25 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
     setActivePDFContent(null);
     setActivePDFTitle(null);
     setActivePDFPage(0);
+    setProgress(0);
+    setIsFileLoading(false);
+    setFileLoadingType("...");
     const fileInput = document.getElementById("fileInput");
     if (fileInput instanceof HTMLInputElement) fileInput.value = "";
+  };
+
+  const setNewPDF = (newPdf: File) => {
+    if (newPdf) {
+      setIsFileLoading(true);
+      setFileLoadingType("Extracting text...");
+      pdfToText(newPdf, setProgress)
+        .then((pdf) => {
+          setActivePDFContent(pdf);
+          setActivePDFTitle(newPdf.name);
+          setIsFileLoading(false);
+        })
+        .catch((error) => console.error("Failed to extract text from pdf"));
+    }
   };
 
   return (
@@ -59,6 +87,13 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
         activePDFPage,
         setActivePDFPage,
         resetPDF,
+        setNewPDF,
+        isFileLoading,
+        progress,
+        setIsFileLoading,
+        setProgress,
+        setFileLoadingType,
+        fileLoadingType,
       }}
     >
       {children}
