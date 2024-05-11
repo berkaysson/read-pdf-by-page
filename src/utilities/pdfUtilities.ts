@@ -8,28 +8,31 @@ import {
   FirebaseStorage,
   UploadTaskSnapshot,
   deleteObject,
+  getBlob,
 } from "firebase/storage";
+import { Dispatch, SetStateAction } from "react";
 
 export const addSavedPdf = async (
   database: Database,
   profile: UserProfile,
   newPdf: SavedPdf,
   file: File,
-  storage: FirebaseStorage
+  storage: FirebaseStorage,
+  setProgress: Dispatch<SetStateAction<number>>
 ) => {
   const existingPdfIndex = profile.savedPdfs.findIndex(
     (pdf) => pdf.title === newPdf.title
   );
 
   if (existingPdfIndex === -1) {
-    let downloadURL = await uploadPdf(profile.uid, file, storage);
+    let downloadURL = await uploadPdf(profile.uid, file, storage, setProgress);
     newPdf.downloadURL = downloadURL;
     const updatedPdfs = [...profile.savedPdfs, newPdf];
-
-    // Update the profile with the updated savedPdfs array in the database
+    setProgress(85);
     const updatedProfile = { ...profile, savedPdfs: updatedPdfs };
+    setProgress(90);
     set(ref(database, `users/${profile.uid}`), updatedProfile);
-
+    setProgress(99);
     return updatedProfile;
   }
   return profile;
@@ -83,10 +86,30 @@ export const deleteSavedPdf = async (
   return profile;
 };
 
+export const getPdfFromStorage = async (
+  profile: UserProfile,
+  pdf: SavedPdf,
+  storage: FirebaseStorage
+): Promise<File | null> => {
+  if (!profile.uid) {
+    return null;
+  }
+  const downloadUrl = `files/${profile.uid}/${pdf.title}`;
+  const _storageRef = storageRef(storage, downloadUrl);
+  try {
+    const blobResponse = await getBlob(_storageRef);
+    return new File([blobResponse], pdf.title, { type: blobResponse.type });
+  } catch (error) {
+    console.error("Error retrieving PDF from storage:", error);
+    return null;
+  }
+};
+
 const uploadPdf = async (
   userId: string | null,
   file: File | null,
-  storage: FirebaseStorage
+  storage: FirebaseStorage,
+  setProgress: Dispatch<SetStateAction<number>>
 ): Promise<string> => {
   if (userId === null) {
     throw new Error("userId is null");
@@ -103,26 +126,21 @@ const uploadPdf = async (
   const uploadTask = uploadBytesResumable(_storageRef, file);
 
   try {
-    // Retrieve the progress percentage of the upload
-    const progressListener = (snapshot: UploadTaskSnapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log(`Upload is ${progress}% done`);
-    };
-
     // Register the progress listener
     uploadTask.on(
       "state_changed",
-      progressListener,
+      (snapshot: UploadTaskSnapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress * 0.8);
+      },
       (error) => {
         throw error;
       },
       () => {}
     );
 
-    // Wait for the upload to complete
     await uploadTask;
 
-    // Retrieve the download URL
     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
     return downloadURL;
   } catch (error) {
