@@ -1,7 +1,7 @@
 import { Database, ref, set } from "firebase/database";
 import { SavedPdf, UserProfile } from "../context/profile.types";
 
-export const addOrUpdateSavedPdf = (
+export const addSavedPdf = (
   database: Database,
   profile: UserProfile,
   newPdf: SavedPdf

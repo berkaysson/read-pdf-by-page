@@ -4,7 +4,7 @@ import { auth, database } from "../firebase.config";
 import { ProfileContextType, SavedPdf, UserProfile } from "./profile.types";
 import { useAuthListener } from "../utilities/useAuthListener";
 import {
-  addOrUpdateSavedPdf,
+  addSavedPdf,
   deleteSavedPdf,
   updateSavedPdfSavedPage,
 } from "../utilities/pdfUtilities";
@@ -12,7 +12,7 @@ import {
 export const ProfileContext = createContext<ProfileContextType>({
   profile: null,
   isLoading: true,
-  addSavedPdf: () => {},
+  handleAddSavedPdf: () => {},
   updatePageOfPdf: () => {},
   deletePdf: () => {},
 });
@@ -27,9 +27,9 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
 
   useAuthListener(auth, database, setProfile, setIsLoading);
 
-  const addSavedPdf = (newPdf: SavedPdf) => {
+  const handleAddSavedPdf = (newPdf: SavedPdf) => {
     if (profile) {
-      const updatedProfile = addOrUpdateSavedPdf(database, profile, newPdf);
+      const updatedProfile = addSavedPdf(database, profile, newPdf);
       setProfile(updatedProfile);
     }
   };
@@ -55,7 +55,7 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
 
   return (
     <ProfileContext.Provider
-      value={{ profile, isLoading, addSavedPdf, updatePageOfPdf, deletePdf }}
+      value={{ profile, isLoading, handleAddSavedPdf, updatePageOfPdf, deletePdf }}
     >
       {children}
     </ProfileContext.Provider>

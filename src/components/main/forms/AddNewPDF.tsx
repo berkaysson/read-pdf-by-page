@@ -6,7 +6,7 @@ import { PDFContext } from "../../../context/pdf.context";
 import { FcAddDatabase } from "react-icons/fc";
 
 export const AddNewPDF = () => {
-  const { addSavedPdf } = useContext(ProfileContext);
+  const { handleAddSavedPdf } = useContext(ProfileContext);
   const { activePDFTitle,setActivePDFContent, setActivePDFTitle } = useContext(PDFContext);
   const [selectedPdf, setSelectedPdf] = useState<File | null>(null);
   const [isFileLoading, setIsFileLoading] = useState<boolean>(false);
@@ -19,7 +19,7 @@ export const AddNewPDF = () => {
     }
   };
 
-  const handleUpload = () => {
+  const handleSave = () => {
     if (selectedPdf) {
       const newPdf: SavedPdf = {
         title: selectedPdf.name,
@@ -27,7 +27,7 @@ export const AddNewPDF = () => {
         updateDate: new Date().toISOString(),
       };
 
-      addSavedPdf(newPdf);
+      handleAddSavedPdf(newPdf);
     }
   };
 
@@ -70,7 +70,7 @@ export const AddNewPDF = () => {
       />
       <button
         className="flex items-center justify-center gap-2 btn"
-        onClick={handleUpload}
+        onClick={handleSave}
         disabled={activePDFTitle === "" || !activePDFTitle}
       >
         <FcAddDatabase className="text-lg" />

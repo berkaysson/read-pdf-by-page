@@ -13,7 +13,7 @@ export interface UserProfile {
 export interface ProfileContextType {
   profile: UserProfile | null;
   isLoading: boolean;
-  addSavedPdf: (newPdf: SavedPdf) => void;
+  handleAddSavedPdf: (newPdf: SavedPdf) => void;
   updatePageOfPdf: (title: string, page: number) => void;
   deletePdf: (title: string) => void;
 }
