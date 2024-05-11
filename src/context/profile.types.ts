@@ -1,7 +1,10 @@
+import { FirebaseStorage } from "firebase/storage";
+
 export interface SavedPdf {
   title: string;
   savedPage: number;
   updateDate: string;
+  downloadURL: string;
 }
 
 export interface UserProfile {
@@ -13,7 +16,7 @@ export interface UserProfile {
 export interface ProfileContextType {
   profile: UserProfile | null;
   isLoading: boolean;
-  handleAddSavedPdf: (newPdf: SavedPdf) => void;
+  handleAddSavedPdf: (newPdf: SavedPdf, file: File) => void;
   updatePageOfPdf: (title: string, page: number) => void;
-  deletePdf: (title: string) => void;
+  deletePdf: (pdf: SavedPdf, storage: FirebaseStorage) => void;
 }

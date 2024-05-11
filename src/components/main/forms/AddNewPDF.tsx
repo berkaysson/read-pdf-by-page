@@ -26,9 +26,10 @@ export const AddNewPDF = () => {
         title: selectedPdf.name,
         savedPage: 0,
         updateDate: new Date().toISOString(),
+        downloadURL: "",
       };
 
-      handleAddSavedPdf(newPdf);
+      handleAddSavedPdf(newPdf, selectedPdf);
     }
   };
 

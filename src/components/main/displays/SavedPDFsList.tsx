@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { ProfileContext } from "../../../context/profile.context";
 import { FcDeleteDatabase } from "react-icons/fc";
+import { SavedPdf } from "../../../context/profile.types";
+import { storage } from "../../../firebase.config";
 
 export const SavedPDFsList: React.FC = () => {
   const { profile, deletePdf } = useContext(ProfileContext);
@@ -11,6 +13,10 @@ export const SavedPDFsList: React.FC = () => {
         new Date(b.updateDate).getTime() - new Date(a.updateDate).getTime()
     );
   }
+
+  const handleDelete = (pdf: SavedPdf) => {
+    deletePdf(pdf, storage);
+  };
 
   return (
     <ul className="flex flex-col gap-2 p-1 overflow-y-scroll rounded-sm shadow-sm h-4/5">
@@ -26,7 +32,7 @@ export const SavedPDFsList: React.FC = () => {
           <span className="font-bold"> {pdfItem.savedPage}</span>
           {}
           <button
-            onClick={() => deletePdf(pdfItem.title)}
+            onClick={() => handleDelete(pdfItem)}
             className="float-right mt-1 btn btn-alt"
           >
             <FcDeleteDatabase className="text-lg" />

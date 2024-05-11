@@ -1,6 +1,6 @@
 // profile.context.jsx
 import { ReactNode, createContext, useState } from "react";
-import { auth, database } from "../firebase.config";
+import { auth, database, storage } from "../firebase.config";
 import { ProfileContextType, SavedPdf, UserProfile } from "./profile.types";
 import { useAuthListener } from "../utilities/useAuthListener";
 import {
@@ -27,9 +27,9 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
 
   useAuthListener(auth, database, setProfile, setIsLoading);
 
-  const handleAddSavedPdf = (newPdf: SavedPdf) => {
+  const handleAddSavedPdf = async (newPdf: SavedPdf, file: File) => {
     if (profile) {
-      const updatedProfile = addSavedPdf(database, profile, newPdf);
+      const updatedProfile = await addSavedPdf(database, profile, newPdf, file, storage);
       setProfile(updatedProfile);
     }
   };
@@ -46,9 +46,9 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
     }
   };
 
-  const deletePdf = (title: string) => {
+  const deletePdf = async (pdf: SavedPdf) => {
     if (profile) {
-      const updatedProfile = deleteSavedPdf(title, database, profile);
+      const updatedProfile = await deleteSavedPdf(pdf, database, profile, storage);
       setProfile(updatedProfile);
     }
   };
