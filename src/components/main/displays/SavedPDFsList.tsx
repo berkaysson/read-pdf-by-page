@@ -32,7 +32,7 @@ export const SavedPDFsList: React.FC = () => {
   };
 
   return (
-    <ul className="flex flex-col gap-2 p-1 overflow-y-scroll rounded-sm shadow-sm h-4/5">
+    <ul className="flex flex-col gap-2 p-1 overflow-y-scroll border-2 rounded-md shadow-md border-secondary">
       {savedPdfsList?.map((pdfItem, index) => (
         <li
           className="p-2 rounded-md shadow-sm bg-secondary"
@@ -47,15 +47,17 @@ export const SavedPDFsList: React.FC = () => {
             disabled={isFileLoading}
             onClick={() => handleDelete(pdfItem)}
             className="float-right mt-1 btn btn-alt"
+            type="button"
           >
-            <FcDeleteDatabase className="text-lg" />
+            <FcDeleteDatabase className="text-lg" />{" "}
           </button>
           <button
+            type="button"
             disabled={isFileLoading}
             className="float-right mt-1 mr-1 btn btn-alt"
             onClick={() => handleDownload(pdfItem)}
           >
-            <FcDownload className="text-lg" />
+            <FcDownload className="text-lg" />{" "}
           </button>
         </li>
       ))}

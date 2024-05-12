@@ -27,39 +27,48 @@ export const Navbar: React.FC<NavbarProps> = ({
   } h-screen duration-300 z-50 fixed top-0 w-3/4 md:w-1/2 flex-shrink-0 bg-light text-primary`;
   return (
     <nav aria-hidden="true" className={navClass} ref={navRef}>
-      <div className="flex shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] flex-col justify-between gap-4 h-full px-4 py-4 overflow-x-hidden overflow-y-auto align-middle">
+      <div className="flex shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] flex-col justify-start gap-4 h-full px-2 py-2 pb-0 overflow-x-hidden overflow-y-scroll">
         <Link
           to="/"
           className="flex items-center justify-center text-3xl font-bold md:text-5xl"
         >
           <FcBookmark className="text-md" /> <span>RPBP</span>
         </Link>
-        {profile && (
-          <>
-            <div className="flex flex-col gap-4">
-              <h2 className="text-xl font-semibold">Last Opened Pdfs</h2>
-              <SavedPDFsList />
-            </div>
-            <div className="flex flex-col gap-4">
-              <AddNewPDF />
-              <ResetPDF />
-            </div>
-            <button className="btn btn-alt" onClick={logout}>
-              Log Out
-            </button>
-          </>
-        )}
+        <div className="flex flex-col justify-between h-[90%]">
+          {profile && (
+            <>
+              <div className="flex flex-col gap-4 h-[60%]">
+                <h2 className="text-xl font-semibold">Last Opened Pdfs</h2>
+                <SavedPDFsList />
+              </div>
+              <div className="flex flex-col justify-end gap-6">
+                <AddNewPDF />
+                <div className="flex flex-row justify-between">
+                  <ResetPDF />
+                  <button
+                    type="button"
+                    className="w-1/2 btn btn-alt"
+                    onClick={logout}
+                  >
+                    Log Out
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+        <button
+          type="button"
+          onClick={() => setIsNavOpen(!isNavOpen)}
+          className="absolute top-0 mt-4 -right-14 btn"
+        >
+          {isNavOpen ? (
+            <FcMinus className="text-lg pointer-events-none" />
+          ) : (
+            <FcMenu className="text-lg pointer-events-none" />
+          )}
+        </button>
       </div>
-      <button
-        onClick={() => setIsNavOpen(!isNavOpen)}
-        className="absolute top-0 mt-4 -right-14 btn"
-      >
-        {isNavOpen ? (
-          <FcMinus className="text-lg pointer-events-none" />
-        ) : (
-          <FcMenu className="text-lg pointer-events-none" />
-        )}
-      </button>
     </nav>
   );
 };
