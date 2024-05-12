@@ -29,6 +29,12 @@ function App() {
                 />
               </div>
               <section className="w-full h-full p-6">
+                <h2 className="mt-10 text-xl">
+                  RPBP (Read PDF By Page) is a web application that allows users
+                  to read PDF files by page. With RPBP, users can easily upload
+                  PDF files, navigate through pages, and view PDF content
+                  conveniently.
+                </h2>
                 <Layout />
               </section>
             </main>
