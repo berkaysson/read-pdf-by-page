@@ -46,3 +46,16 @@ input[type="file"] {
   cursor: not-allowed;
   opacity: .8;
 }
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: #b8b8b8;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #352b00;
+  border-radius: 5px;
+}
