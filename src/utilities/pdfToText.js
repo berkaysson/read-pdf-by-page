@@ -5,17 +5,17 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 const pdfToText = async (file, setProgress) => {
   try {
-    // Create a blob URL for the PDF file
-    const blobUrl = URL.createObjectURL(file);
+    if (!file) {
+      throw new Error("No file provided.");
+    }
 
-    // Load the PDF file
+    const blobUrl = URL.createObjectURL(file);
     const loadingTask = pdfjs.getDocument(blobUrl);
 
     const pdf = await loadingTask.promise;
     const numPages = pdf.numPages;
-    let extractedTextByPage = [];
+    const extractedTextByPage = [];
 
-    // Iterate through each page and extract text
     for (let pageNumber = 1; pageNumber <= numPages; pageNumber++) {
       const page = await pdf.getPage(pageNumber);
       const textContent = await page.getTextContent();
@@ -23,9 +23,9 @@ const pdfToText = async (file, setProgress) => {
       extractedTextByPage.push(pageText);
 
       const progress = (pageNumber / numPages) * 100;
-      setProgress(progress);
+      setProgress && setProgress(progress);
     }
-    // Clean up the blob URL
+
     URL.revokeObjectURL(blobUrl);
     return extractedTextByPage;
   } catch (error) {
