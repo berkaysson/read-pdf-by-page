@@ -1,11 +1,9 @@
 import React, { Dispatch, SetStateAction, useContext } from "react";
 import { logout } from "../../utilities/signOutUtilities";
 import { ProfileContext } from "../../context/profile.context";
-import { Link } from "react-router-dom";
 import { AddNewPDF } from "../main/forms/AddNewPDF";
 import { SavedPDFsList } from "../main/displays/SavedPDFsList";
 import { ResetPDF } from "../main/forms/ResetPDF";
-import { FcBookmark } from "react-icons/fc";
 import { FcMenu } from "react-icons/fc";
 import { FcMinus } from "react-icons/fc";
 
@@ -28,12 +26,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <nav aria-hidden="true" className={navClass} ref={navRef}>
       <div className="flex shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] flex-col justify-start gap-4 h-full px-2 py-2 pb-0 overflow-x-hidden overflow-y-scroll">
-        <Link
-          to="/"
-          className="flex items-center justify-center text-3xl font-bold md:text-5xl"
-        >
-          <FcBookmark className="text-md" /> <span>RPBP</span>
-        </Link>
         <div className="flex flex-col justify-between h-[90%]">
           {profile && (
             <>
