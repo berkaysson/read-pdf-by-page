@@ -3,6 +3,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { FileLoadingType, PDFContextType } from "./pdf.types";
@@ -40,7 +41,8 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
   const [activePDFPage, setActivePDFPage] = useState<number>(0);
   const [isFileLoading, setIsFileLoading] = useState<boolean>(false);
   const [progress, setProgress] = useState(0);
-  const [fileLoadingType, setFileLoadingType] = useState<FileLoadingType>("...");
+  const [fileLoadingType, setFileLoadingType] =
+    useState<FileLoadingType>("...");
 
   useEffect(() => {
     if (profile) {
@@ -63,40 +65,53 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
     if (fileInput instanceof HTMLInputElement) fileInput.value = "";
   };
 
-  const setNewPDF = (newPdf: File) => {
-    if (newPdf) {
-      setIsFileLoading(true);
-      setFileLoadingType("Extracting text...");
-      pdfToText(newPdf, setProgress)
-        .then((pdf) => {
-          setActivePDFContent(pdf);
-          setActivePDFTitle(newPdf.name);
-          setIsFileLoading(false);
-        })
-        .catch((error) => console.error("Failed to extract text from pdf"));
+  const setNewPDF = (newPdf: File | null) => {
+    if (newPdf === null) {
+      console.error("setNewPDF was called with a null File.");
+      return;
     }
+
+    setIsFileLoading(true);
+    setFileLoadingType("Extracting text...");
+    pdfToText(newPdf, setProgress)
+      .then((pdf) => {
+        setActivePDFContent(pdf);
+        setActivePDFTitle(newPdf?.name ?? "Unknown PDF");
+        setIsFileLoading(false);
+      })
+      .catch((error: Error) => {
+        console.error("Failed to extract text from pdf", error);
+      });
   };
 
+  const contextValue = useMemo(
+    () => ({
+      activePDFContent,
+      setActivePDFContent,
+      activePDFTitle,
+      setActivePDFTitle,
+      activePDFPage,
+      setActivePDFPage,
+      resetPDF,
+      setNewPDF,
+      isFileLoading,
+      progress,
+      setIsFileLoading,
+      setProgress,
+      setFileLoadingType,
+      fileLoadingType,
+    }),
+    [
+      activePDFContent,
+      activePDFTitle,
+      activePDFPage,
+      isFileLoading,
+      progress,
+      fileLoadingType,
+    ]
+  );
+
   return (
-    <PDFContext.Provider
-      value={{
-        activePDFContent,
-        setActivePDFContent,
-        activePDFTitle,
-        setActivePDFTitle,
-        activePDFPage,
-        setActivePDFPage,
-        resetPDF,
-        setNewPDF,
-        isFileLoading,
-        progress,
-        setIsFileLoading,
-        setProgress,
-        setFileLoadingType,
-        fileLoadingType,
-      }}
-    >
-      {children}
-    </PDFContext.Provider>
+    <PDFContext.Provider value={contextValue}>{children}</PDFContext.Provider>
   );
 };

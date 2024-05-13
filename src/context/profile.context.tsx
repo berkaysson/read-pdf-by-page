@@ -1,5 +1,12 @@
 // profile.context.jsx
-import { Dispatch, ReactNode, SetStateAction, createContext, useState } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useMemo,
+  useState,
+} from "react";
 import { auth, database, storage } from "../firebase.config";
 import { ProfileContextType, SavedPdf, UserProfile } from "./profile.types";
 import { useAuthListener } from "../utilities/useAuthListener";
@@ -27,9 +34,20 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
 
   useAuthListener(auth, database, setProfile, setIsLoading);
 
-  const handleAddSavedPdf = async (newPdf: SavedPdf, file: File, setProgress: Dispatch<SetStateAction<number>>) => {
+  const handleAddSavedPdf = async (
+    newPdf: SavedPdf,
+    file: File,
+    setProgress: Dispatch<SetStateAction<number>>
+  ) => {
     if (profile) {
-      const updatedProfile = await addSavedPdf(database, profile, newPdf, file, storage, setProgress);
+      const updatedProfile = await addSavedPdf(
+        database,
+        profile,
+        newPdf,
+        file,
+        storage,
+        setProgress
+      );
       setProfile(updatedProfile);
     }
   };
@@ -48,14 +66,28 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
 
   const deletePdf = async (pdf: SavedPdf) => {
     if (profile) {
-      const updatedProfile = await deleteSavedPdf(pdf, database, profile, storage);
+      const updatedProfile = await deleteSavedPdf(
+        pdf,
+        database,
+        profile,
+        storage
+      );
       setProfile(updatedProfile);
     }
   };
 
+  const contextValue = useMemo(() => ({
+    profile,
+    isLoading,
+    handleAddSavedPdf,
+    updatePageOfPdf,
+    deletePdf,
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [profile, isLoading]);
+
   return (
     <ProfileContext.Provider
-      value={{ profile, isLoading, handleAddSavedPdf, updatePageOfPdf, deletePdf }}
+      value={contextValue}
     >
       {children}
     </ProfileContext.Provider>
