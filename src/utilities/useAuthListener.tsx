@@ -38,7 +38,6 @@ export const useAuthListener = (
           setIsLoading(false);
         });
       } else {
-        // If user is not authenticated
         if (userRef) off(userRef);
 
         setProfile(null);
@@ -51,5 +50,6 @@ export const useAuthListener = (
 
       if (userRef) off(userRef);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
