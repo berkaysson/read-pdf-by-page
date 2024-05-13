@@ -15,23 +15,23 @@ export const PDFDisplay: React.FC = () => {
   }, [activePDFContent]);
 
   return (
-    <div className="mb-24">
+    <div className="mt-10 mb-24">
       <div>
         <h3 className="mb-4 text-2xl font-semibold">
           {activePDFTitle && `${activePDFTitle} - ${activePDFPage}`}
         </h3>
       </div>
-      <article className="flex flex-col gap-2 p-2 text-justify rounded-md shadow-sm bg-light">
-        {pages.length<1 && <span className="italic">Add new PDF Please</span>}
+      <article className="flex flex-col gap-4 text-justify bg-secondary">
+        {pages.length<1 && <span className="italic shadow-inner">Add new PDF Please</span>}
         {pages.map((page, index) => (
           <p
             key={"p" + index}
             id={"page-" + (index + 1)}
-            className={index + 1 >= activePDFPage ? "" : "hide-page"}
+            className={index + 1 >= activePDFPage ? " bg-light px-4 py-10 rounded-sm shadow-inner" : "hide-page"}
             lang="tr"
           >
             {page}
-            <span aria-hidden="true" className="float-right mt-6 mr-2 text-sm" key={"pageNum-" + index}>{index + 1}</span>
+            <span aria-hidden="true" className="float-right mt-6 mr-2 text-sm italic" key={"pageNum-" + index}>{index + 1}</span>
           </p>
         ))}
       </article>
