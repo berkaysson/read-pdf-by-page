@@ -18,7 +18,15 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   }, [isLoading, profile, navigate]);
 
   return (
-    <>{isLoading ? <p className="text-center ">Loading...</p> : children}</>
+    <>
+      {isLoading ? (
+        <p className="text-center animate-bounce mt-4">
+          Loading... <div className="animate-spin">|</div>
+        </p>
+      ) : (
+        children
+      )}
+    </>
   );
 };
 

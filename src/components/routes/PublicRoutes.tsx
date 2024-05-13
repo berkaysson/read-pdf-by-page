@@ -18,7 +18,15 @@ const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
   }, [isLoading, profile, navigate]);
 
   return (
-    <>{isLoading ? <p className="text-center ">Loading...</p> : children}</>
+    <>
+      {isLoading ? (
+        <p className="mt-4 text-center animate-bounce">
+          Loading... <div className="animate-spin">|</div>
+        </p>
+      ) : (
+        children
+      )}
+    </>
   );
 };
 

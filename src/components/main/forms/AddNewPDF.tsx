@@ -56,7 +56,16 @@ export const AddNewPDF = () => {
           htmlFor="fileInput"
         >
           {isFileLoading ? (
-            <span className="text-sm">{fileLoadingType}</span>
+            <div
+              className={`text-sm mt-2 ${
+                isFileLoading && "motion-safe:animate-bounce"
+              }`}
+            >
+              {fileLoadingType}
+              <div className={`${isFileLoading && "motion-safe:animate-spin"}`}>
+                |
+              </div>
+            </div>
           ) : (
             "+"
           )}
