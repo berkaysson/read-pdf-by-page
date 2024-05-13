@@ -1,5 +1,13 @@
 import { auth } from "../firebase.config";
 
 export const logout = () => {
-  auth.signOut();
+  if (auth) {
+    try {
+      auth.signOut();
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  } else {
+    console.error('Auth instance is not defined');
+  }
 };

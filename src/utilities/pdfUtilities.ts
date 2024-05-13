@@ -9,32 +9,41 @@ import {
   UploadTaskSnapshot,
   deleteObject,
   getBlob,
+  UploadTask,
 } from "firebase/storage";
 import { Dispatch, SetStateAction } from "react";
 
 export const addSavedPdf = async (
   database: Database,
-  profile: UserProfile,
+  profile: UserProfile | null,
   newPdf: SavedPdf,
-  file: File,
+  file: File | null,
   storage: FirebaseStorage,
   setProgress: Dispatch<SetStateAction<number>>
 ) => {
+  if (!profile || !file) {
+    throw new Error("Profile or file is null");
+  }
+
   const existingPdfIndex = profile.savedPdfs.findIndex(
     (pdf) => pdf.title === newPdf.title
   );
 
   if (existingPdfIndex === -1) {
-    let downloadURL = await uploadPdf(profile.uid, file, storage, setProgress);
-    newPdf.downloadURL = downloadURL;
-    const updatedPdfs = [...profile.savedPdfs, newPdf];
     setProgress(85);
+
+    const { uid } = profile;
+    const downloadURL = await uploadPdf(uid, file, storage, setProgress);
+
+    const updatedPdfs = [...profile.savedPdfs, { ...newPdf, downloadURL }];
     const updatedProfile = { ...profile, savedPdfs: updatedPdfs };
-    setProgress(90);
-    set(ref(database, `users/${profile.uid}`), updatedProfile);
+
+    await set(ref(database, `users/${uid}`), updatedProfile);
     setProgress(99);
+
     return updatedProfile;
   }
+
   return profile;
 };
 
@@ -48,18 +57,24 @@ export const updateSavedPdfSavedPage = (
     (pdf) => pdf.title === pdfTitle
   );
 
-  if (existingPdfIndex >= 0) {
-    const updatedPdfs = [...profile.savedPdfs];
-    updatedPdfs[existingPdfIndex].savedPage = newPdfPage;
-    updatedPdfs[existingPdfIndex].updateDate = new Date().toISOString();
-    const updatedProfile = { ...profile, savedPdfs: updatedPdfs };
-    set(ref(database, `users/${profile.uid}`), updatedProfile);
-
-    return updatedProfile;
-  } else {
+  if (existingPdfIndex === -1) {
     alert("Pdf is not existing in database.");
+    return profile;
   }
-  return profile;
+
+  const updatedPdfs = [...profile.savedPdfs];
+  const pdfToUpdate = updatedPdfs[existingPdfIndex];
+  pdfToUpdate.savedPage = newPdfPage;
+  pdfToUpdate.updateDate = new Date().toISOString();
+  const updatedProfile = { ...profile, savedPdfs: updatedPdfs };
+
+  try {
+    set(ref(database, `users/${profile.uid}`), updatedProfile);
+    return updatedProfile;
+  } catch (error) {
+    console.error("Error updating saved pdf page:", error);
+    return profile;
+  }
 };
 
 export const deleteSavedPdf = async (
@@ -68,22 +83,31 @@ export const deleteSavedPdf = async (
   profile: UserProfile,
   storage: FirebaseStorage
 ) => {
+  if (!profile || !storage) {
+    throw new Error("Profile or storage is null");
+  }
+
   const existingPdfIndex = profile.savedPdfs.findIndex(
     (_pdf) => _pdf.title === pdf.title
   );
-  if (existingPdfIndex >= 0) {
-    const updatedPdfs = [...profile.savedPdfs];
-    updatedPdfs.splice(existingPdfIndex, 1);
-    const updatedProfile = { ...profile, savedPdfs: updatedPdfs };
-    set(ref(database, `users/${profile.uid}`), updatedProfile);
+  if (existingPdfIndex < 0) {
+    alert("Pdf is not existing in database.");
+    return profile;
+  }
 
-    const path = `files/${profile.uid}/${pdf.title}`;
+  const updatedPdfs = [...profile.savedPdfs];
+  updatedPdfs.splice(existingPdfIndex, 1);
+  const updatedProfile = { ...profile, savedPdfs: updatedPdfs };
+  set(ref(database, `users/${profile.uid}`), updatedProfile);
+
+  const path = `files/${profile.uid}/${pdf.title}`;
+  try {
     await deleteObject(storageRef(storage, path));
     return updatedProfile;
-  } else {
-    alert("Pdf is not existing in database.");
+  } catch (error) {
+    console.error("Error deleting pdf from storage:", error);
+    return profile;
   }
-  return profile;
 };
 
 export const getPdfFromStorage = async (
@@ -91,7 +115,8 @@ export const getPdfFromStorage = async (
   pdf: SavedPdf,
   storage: FirebaseStorage
 ): Promise<File | null> => {
-  if (!profile.uid) {
+  if (!profile || !profile.uid || !pdf.title) {
+    console.error("Error retrieving PDF from storage: Invalid input");
     return null;
   }
   const downloadUrl = `files/${profile.uid}/${pdf.title}`;
@@ -125,25 +150,26 @@ const uploadPdf = async (
 
   const uploadTask = uploadBytesResumable(_storageRef, file);
 
-  try {
-    // Register the progress listener
+  await handleUploadTask(uploadTask, setProgress);
+
+  const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+  return downloadURL;
+};
+
+const handleUploadTask = (
+  uploadTask: UploadTask,
+  setProgress: Dispatch<SetStateAction<number>>
+) => {
+  return new Promise<void>((resolve, reject) => {
     uploadTask.on(
       "state_changed",
       (snapshot: UploadTaskSnapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setProgress(progress * 0.8);
       },
-      (error) => {
-        throw error;
-      },
-      () => {}
+      reject,
+      resolve
     );
-
-    await uploadTask;
-
-    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-    return downloadURL;
-  } catch (error) {
-    throw new Error("Failed to upload PDF: " + error);
-  }
+  });
 };
