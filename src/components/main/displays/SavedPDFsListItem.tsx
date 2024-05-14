@@ -39,9 +39,8 @@ const SavedPDFsListItem: React.FC<PDFItemProps> = ({ pdfItem }) => {
 
   return (
     <li className="p-2 rounded-md shadow-sm bg-secondary" key={pdfItem.title}>
-      <p className="pb-4 overflow-x-auto whitespace-nowrap">{pdfItem.title}</p>
-      Page:
-      <span className="font-bold"> {pdfItem.savedPage}</span>
+      <p className="overflow-x-auto whitespace-nowrap">{pdfItem.title}</p>
+      <p className="font-bold">Page: {pdfItem.savedPage}</p>
       {showConfirm ? (
         <span className="float-right mt-1">
           <AreYouSure
