@@ -76,7 +76,9 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
     pdfToText(newPdf, setProgress)
       .then((pdf) => {
         setActivePDFContent(pdf);
-        setActivePDFTitle(newPdf?.name ?? "Unknown PDF");
+        setActivePDFTitle(
+          newPdf?.name.replace(/\.[^/.]+$/, "") ?? "Unknown File"
+        );
         setIsFileLoading(false);
       })
       .catch((error: Error) => {
