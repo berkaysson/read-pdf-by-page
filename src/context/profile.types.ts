@@ -19,7 +19,7 @@ export interface ProfileContextType {
   isLoading: boolean;
   handleAddSavedPdf: (
     newPdf: SavedPdf,
-    file: File,
+    file: string[],
     setProgress: Dispatch<SetStateAction<number>>
   ) => void;
   updatePageOfPdf: (title: string, page: number) => void;

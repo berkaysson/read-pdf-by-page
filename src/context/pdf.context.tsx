@@ -65,25 +65,34 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
     if (fileInput instanceof HTMLInputElement) fileInput.value = "";
   };
 
-  const setNewPDF = (newPdf: File | null) => {
+  const setNewPDF = async (newPdf: File | null) => {
     if (newPdf === null) {
       console.error("setNewPDF was called with a null File.");
       return;
     }
-
+    console.log(newPdf);
     setIsFileLoading(true);
     setFileLoadingType("Extracting text...");
-    pdfToText(newPdf, setProgress)
-      .then((pdf) => {
-        setActivePDFContent(pdf);
-        setActivePDFTitle(
-          newPdf?.name.replace(/\.[^/.]+$/, "") ?? "Unknown File"
-        );
-        setIsFileLoading(false);
-      })
-      .catch((error: Error) => {
-        console.error("Failed to extract text from pdf", error);
-      });
+    if (newPdf.type === "application/json") {
+      setActivePDFTitle(
+        newPdf?.name.replace(/\.[^/.]+$/, "") ?? "Unknown File"
+      );
+      const pdfContent = JSON.parse(await newPdf.text());
+      setActivePDFContent(pdfContent);
+      setIsFileLoading(false);
+    } else if (newPdf.type === "application/pdf") {
+      pdfToText(newPdf, setProgress)
+        .then((pdf) => {
+          setActivePDFContent(pdf);
+          setActivePDFTitle(
+            newPdf?.name.replace(/\.[^/.]+$/, "") ?? "Unknown File"
+          );
+          setIsFileLoading(false);
+        })
+        .catch((error: Error) => {
+          console.error("Failed to extract text from pdf", error);
+        });
+    }
   };
 
   const contextValue = useMemo(

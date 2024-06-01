@@ -36,7 +36,7 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
 
   const handleAddSavedPdf = async (
     newPdf: SavedPdf,
-    file: File,
+    content: string[],
     setProgress: Dispatch<SetStateAction<number>>
   ) => {
     if (profile) {
@@ -44,7 +44,7 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
         database,
         profile,
         newPdf,
-        file,
+        content,
         storage,
         setProgress
       );

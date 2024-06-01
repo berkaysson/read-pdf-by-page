@@ -17,11 +17,11 @@ export const addSavedPdf = async (
   database: Database,
   profile: UserProfile | null,
   newPdf: SavedPdf,
-  file: File | null,
+  content: string[],
   storage: FirebaseStorage,
   setProgress: Dispatch<SetStateAction<number>>
 ) => {
-  if (!profile || !file) {
+  if (!profile || !content) {
     throw new Error("Profile or file is null");
   }
 
@@ -33,7 +33,13 @@ export const addSavedPdf = async (
     setProgress(85);
 
     const { uid } = profile;
-    const downloadURL = await uploadPdf(uid, file, storage, setProgress);
+    const downloadURL = await uploadPdf(
+      uid,
+      content,
+      storage,
+      setProgress,
+      newPdf.title
+    );
 
     const updatedPdfs = [...profile.savedPdfs, { ...newPdf, downloadURL }];
     const updatedProfile = { ...profile, savedPdfs: updatedPdfs };
@@ -132,23 +138,31 @@ export const getPdfFromStorage = async (
 
 const uploadPdf = async (
   userId: string | null,
-  file: File | null,
+  content: string[],
   storage: FirebaseStorage,
-  setProgress: Dispatch<SetStateAction<number>>
+  setProgress: Dispatch<SetStateAction<number>>,
+  fileName: string
 ): Promise<string> => {
   if (userId === null) {
     throw new Error("userId is null");
   }
-  if (file === null) {
+  if (content === null) {
     throw new Error("file is null");
   }
-
+  if (fileName === null || fileName === "") {
+    throw new Error("fileName is null");
+  }
+  
   const _storageRef: StorageReference = storageRef(
     storage,
-    `files/${userId}/${file.name}`
+    `files/${userId}/${fileName}`
   );
 
-  const uploadTask = uploadBytesResumable(_storageRef, file);
+  const contentBlob = new Blob([JSON.stringify(content)], {
+    type: "application/json",
+  });
+
+  const uploadTask = uploadBytesResumable(_storageRef, contentBlob);
 
   await handleUploadTask(uploadTask, setProgress);
 

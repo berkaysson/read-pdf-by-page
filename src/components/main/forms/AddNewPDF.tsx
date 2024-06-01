@@ -15,6 +15,7 @@ export const AddNewPDF = () => {
     setIsFileLoading,
     setFileLoadingType,
     fileLoadingType,
+    activePDFContent
   } = useContext(PDFContext);
   const [selectedPdf, setSelectedPdf] = useState<File | null>(null);
 
@@ -26,16 +27,16 @@ export const AddNewPDF = () => {
   };
 
   const handleSave = async () => {
-    if (selectedPdf) {
+    if (selectedPdf && activePDFContent && activePDFTitle) {
       setIsFileLoading(true);
       setFileLoadingType("Uploading...");
       const newPdf: SavedPdf = {
-        title: selectedPdf.name,
+        title: activePDFTitle,
         savedPage: 0,
         updateDate: new Date().toISOString(),
         downloadURL: "",
       };
-      await handleAddSavedPdf(newPdf, selectedPdf, setProgress);
+      await handleAddSavedPdf(newPdf, activePDFContent, setProgress);
       setProgress(100);
       setIsFileLoading(false);
     }
