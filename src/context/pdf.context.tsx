@@ -70,7 +70,6 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
       console.error("setNewPDF was called with a null File.");
       return;
     }
-    console.log(newPdf);
     setIsFileLoading(true);
     setFileLoadingType("Extracting text...");
     if (newPdf.type === "application/json") {
