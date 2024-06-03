@@ -74,7 +74,7 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
     setFileLoadingType("Extracting text...");
     if (newPdf.type === "application/json") {
       setActivePDFTitle(
-        newPdf?.name.replace(/\.[^/.]+$/, "") ?? "Unknown File"
+        newPdf?.name.replace(".json", "") ?? "Unknown File"
       );
       const pdfContent = JSON.parse(await newPdf.text());
       setActivePDFContent(pdfContent);
@@ -84,7 +84,7 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
         .then((pdf) => {
           setActivePDFContent(pdf);
           setActivePDFTitle(
-            newPdf?.name.replace(/\.[^/.]+$/, "") ?? "Unknown File"
+            newPdf?.name.replace(".pdf", "") ?? "Unknown File"
           );
           setIsFileLoading(false);
         })
