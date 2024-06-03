@@ -18,7 +18,7 @@ export const SavedPDFsList: React.FC = () => {
         <li className="text-center">No saved PDFs</li>
       )}
       {savedPdfsList?.map((pdfItem) => (
-        <SavedPDFsListItem pdfItem={pdfItem} />
+        <SavedPDFsListItem key={pdfItem.title} pdfItem={pdfItem} />
       ))}
     </ul>
   );
