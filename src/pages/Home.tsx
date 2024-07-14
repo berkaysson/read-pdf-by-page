@@ -2,6 +2,7 @@ import React from "react";
 import { PDFDisplay } from "../components/main/displays/PDFDisplay";
 import PdfMenuBar from "../components/navigation/PdfMenuBar";
 import LoadingModal from "../components/main/displays/LoadingModal";
+import { Toaster } from "../ui/toaster";
 
 export const Home: React.FC = () => {
   return (
@@ -9,6 +10,7 @@ export const Home: React.FC = () => {
       <LoadingModal />
       <PdfMenuBar />
       <PDFDisplay />
+      <Toaster />
     </div>
   );
 };

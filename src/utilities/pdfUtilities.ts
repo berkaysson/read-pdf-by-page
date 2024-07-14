@@ -64,8 +64,7 @@ export const updateSavedPdfSavedPage = (
   );
 
   if (existingPdfIndex === -1) {
-    alert("You must upload a pdf first.");
-    return profile;
+    return { profile, success: false };
   }
 
   const updatedPdfs = [...profile.savedPdfs];
@@ -76,10 +75,10 @@ export const updateSavedPdfSavedPage = (
 
   try {
     set(ref(database, `users/${profile.uid}`), updatedProfile);
-    return updatedProfile;
+    return { profile: updatedProfile, success: true };
   } catch (error) {
     console.error("Error updating saved pdf page:", error);
-    return profile;
+    return { profile, success: false };
   }
 };
 
@@ -152,7 +151,7 @@ const uploadPdf = async (
   if (fileName === null || fileName === "") {
     throw new Error("fileName is null");
   }
-  
+
   const _storageRef: StorageReference = storageRef(
     storage,
     `files/${userId}/${fileName}`
