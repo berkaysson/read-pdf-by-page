@@ -7,7 +7,8 @@ import { BookMarked } from "lucide-react";
 
 export const PageInputForm = () => {
   const [pageNumber, setPageNumber] = useState<number | null>(null);
-  const { activePDFTitle, setActivePDFPage } = useContext(PDFContext);
+  const { activePDFTitle, setActivePDFPage, activePDFPage } =
+    useContext(PDFContext);
   const { updatePageOfPdf } = useContext(ProfileContext);
 
   const handlePageNumberChange = (
@@ -20,8 +21,7 @@ export const PageInputForm = () => {
   const handleSavePageButton = () => {
     if (activePDFTitle && pageNumber) {
       updatePageOfPdf(activePDFTitle, pageNumber);
-    }
-    else {
+    } else {
       alert("PDF or page number is missing");
     }
   };
@@ -34,7 +34,9 @@ export const PageInputForm = () => {
   }, [pageNumber]);
 
   useEffect(() => {
-    setActivePDFPage(1);
+    if (!activePDFTitle) {
+      setPageNumber(1);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activePDFTitle]);
 
@@ -48,6 +50,7 @@ export const PageInputForm = () => {
           required
           min="0"
           name="pageNum"
+          value={pageNumber || 1}
           onChange={handlePageNumberChange}
           className="w-14 placeholder:text-xs opacity-90 focus:opacity-100"
         />
