@@ -1,18 +1,22 @@
 import React, { useContext } from "react";
 import { PDFContext } from "../../../context/pdf.context";
+import { Button } from "../../../ui/button";
+import { ListRestart } from "lucide-react";
 
 export const ResetPDF = () => {
-  const { resetPDF, isFileLoading } = useContext(PDFContext);
+  const { resetPDF, isFileLoading, activePDFTitle } = useContext(PDFContext);
   return (
     <div>
-      <button
-        disabled={isFileLoading}
-        className="btn btn-alt"
+      <Button
         type="button"
         onClick={resetPDF}
+        variant="secondary"
+        size={"sm"}
+        disabled={isFileLoading || !activePDFTitle}
       >
-        Reset PDF
-      </button>
+        <ListRestart className="w-4 h-4 mr-2" />
+        Reset
+      </Button>
     </div>
   );
 };

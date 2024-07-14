@@ -1,11 +1,13 @@
 import React from "react";
-import { PageInputForm } from "../components/main/forms/PageInputForm";
 import { PDFDisplay } from "../components/main/displays/PDFDisplay";
+import { SavedPDFsList } from "../components/main/displays/SavedPDFsList";
+import PdfMenuBar from "../components/navigation/PdfMenuBar";
 
 export const Home: React.FC = () => {
   return (
     <div className="flex flex-col justify-center gap-8 align-middle">
-      <PageInputForm />
+      <SavedPDFsList />
+      <PdfMenuBar />
       <PDFDisplay />
     </div>
   );
