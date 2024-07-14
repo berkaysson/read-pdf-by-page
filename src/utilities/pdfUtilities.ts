@@ -64,7 +64,7 @@ export const updateSavedPdfSavedPage = (
   );
 
   if (existingPdfIndex === -1) {
-    alert("Pdf is not existing in database.");
+    alert("You must upload a pdf first.");
     return profile;
   }
 
