@@ -51,7 +51,7 @@ export const PageInputForm = () => {
           required
           min="0"
           name="pageNum"
-          value={pageNumber || 1}
+          value={pageNumber || ""}
           onChange={handlePageNumberChange}
           className="w-14 placeholder:text-xs opacity-90 focus:opacity-100"
         />
