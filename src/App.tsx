@@ -12,12 +12,11 @@ function App() {
           <BrowserRouter>
             <main className="flex flex-col flex-1 text-primary bg-secondary">
               <Navbar />
-              <section className="w-full h-full p-6 mt-8">
-                <h2 className="my-8 text-md sm:text-xl">
+              <section className="w-full h-full p-4 mt-8">
+                <h2 className="mt-8 text-md sm:text-xl">
                   <span className="text-xl font-bold sm:text-2xl">RPBP</span> (Read PDF By
                   Page) is a web application that allows users to read PDF files
-                  by page. With RPBP, users can easily upload PDF files,
-                  navigate through pages, and view PDF content conveniently.
+                  by page.
                 </h2>
                 <Layout />
               </section>
