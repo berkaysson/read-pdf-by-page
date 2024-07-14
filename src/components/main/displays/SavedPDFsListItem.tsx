@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { PDFContext } from "../../../context/pdf.context";
-import { FcDeleteDatabase, FcDownload } from "react-icons/fc";
 import { SavedPdf } from "../../../context/profile.types";
 import { getPdfFromStorage } from "../../../utilities/pdfUtilities";
 import { ProfileContext } from "../../../context/profile.context";
