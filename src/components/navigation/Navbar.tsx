@@ -10,9 +10,12 @@ import { logout } from "../../utilities/signOutUtilities";
 import PdfListSheet from "../main/displays/PdfListSheet";
 import { ProfileContext } from "../../context/profile.context";
 import { useContext } from "react";
+import useWindowWidth from "../../hooks/useWindowWidth";
 
 export const Navbar = () => {
   const { profile } = useContext(ProfileContext);
+  const windowWidth = useWindowWidth();
+
   return (
     <>
       {profile && (
@@ -27,7 +30,6 @@ export const Navbar = () => {
             <NavigationMenuItem>
               <PdfListSheet />
             </NavigationMenuItem>
-
             <NavigationMenuItem>
               <Button
                 type="button"
@@ -35,7 +37,10 @@ export const Navbar = () => {
                 variant="destructive"
                 size={"sm"}
               >
-                <LogOut className="w-4 h-4 mr-2" /> Log Out
+                <LogOut
+                  className={`w-4 h-4 ${windowWidth < 425 ? "" : "mr-2"}`}
+                />
+                {windowWidth < 425 ? "" : "Logout"}
               </Button>
             </NavigationMenuItem>
           </NavigationMenuList>

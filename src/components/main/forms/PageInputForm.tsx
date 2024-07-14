@@ -4,12 +4,13 @@ import { ProfileContext } from "../../../context/profile.context";
 import { Input } from "../../../ui/input";
 import { Button } from "../../../ui/button";
 import { BookMarked } from "lucide-react";
+import useWindowWidth from "../../../hooks/useWindowWidth";
 
 export const PageInputForm = () => {
   const [pageNumber, setPageNumber] = useState<number | null>(null);
-  const { activePDFTitle, setActivePDFPage, activePDFPage } =
-    useContext(PDFContext);
+  const { activePDFTitle, setActivePDFPage } = useContext(PDFContext);
   const { updatePageOfPdf } = useContext(ProfileContext);
+  const windowWidth = useWindowWidth();
 
   const handlePageNumberChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -61,8 +62,10 @@ export const PageInputForm = () => {
           size={"sm"}
           disabled={!pageNumber || !activePDFTitle}
         >
-          <BookMarked className="w-4 h-4 mr-2" />
-          Save
+          <BookMarked
+            className={`w-4 h-4 ${windowWidth < 425 ? "" : "mr-2"}`}
+          />
+          {windowWidth < 425 ? "" : "Save"}
         </Button>
       </form>
     </div>

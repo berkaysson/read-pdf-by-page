@@ -8,10 +8,10 @@ import { useContext } from "react";
 import { PDFContext } from "../../context/pdf.context";
 import { ProfileContext } from "../../context/profile.context";
 import { SavedPdf } from "../../context/profile.types";
-import { FcAddDatabase } from "react-icons/fc";
 import { Button } from "../../ui/button";
 import { FileUp } from "lucide-react";
 import { ResetPDF } from "../main/forms/ResetPDF";
+import useWindowWidth from "../../hooks/useWindowWidth";
 
 const PdfMenuBar = () => {
   const { handleAddSavedPdf } = useContext(ProfileContext);
@@ -22,6 +22,8 @@ const PdfMenuBar = () => {
     setFileLoadingType,
     activePDFContent,
   } = useContext(PDFContext);
+
+  const windowWidth = useWindowWidth();
 
   const handleSave = async () => {
     if (activePDFContent && activePDFTitle) {
@@ -52,8 +54,8 @@ const PdfMenuBar = () => {
             variant="secondary"
             size={"sm"}
           >
-            <FileUp className="w-4 h-4 mr-2" />
-            Upload
+            <FileUp className={`w-4 h-4 ${windowWidth < 425 ? "" : "mr-2"}`} />
+            {windowWidth < 425 ? "" : "Upload"}
           </Button>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -62,7 +64,6 @@ const PdfMenuBar = () => {
         <NavigationMenuItem>
           <PageInputForm />
         </NavigationMenuItem>
-        <NavigationMenuItem></NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );

@@ -12,14 +12,17 @@ import {
   SheetTrigger,
 } from "../../../ui/sheet";
 import { SavedPDFsList } from "./SavedPDFsList";
+import useWindowWidth from "../../../hooks/useWindowWidth";
 
 function PdfListSheet() {
+  const windowWidth = useWindowWidth();
+
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" size={"sm"}>
-          <FileBadge className="w-4 h-4 mr-2" />
-          Your PDFs
+          <FileBadge className={`w-4 h-4 ${windowWidth < 425 ? "" : "mr-2"}`} />
+          {windowWidth < 425 ? "" : "Your PDFs"}
         </Button>
       </SheetTrigger>
       <SheetContent>

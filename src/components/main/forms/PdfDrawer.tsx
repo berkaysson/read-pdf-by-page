@@ -10,13 +10,17 @@ import {
   DrawerTrigger,
 } from "../../../ui/drawer";
 import { AddNewPDF } from "./AddNewPDF";
+import useWindowWidth from "../../../hooks/useWindowWidth";
 
 function PdfDrawer() {
+  const windowWidth = useWindowWidth();
+  
   return (
     <Drawer>
       <DrawerTrigger asChild>
         <Button variant="outline" size="sm">
-          <FilePlus2 className="w-4 h-4 mr-2" /> Add New PDF
+          <FilePlus2 className={`w-4 h-4 ${windowWidth < 425 ? "" : "mr-2"}`} />
+          {windowWidth < 425 ? "" : "Add New PDF"}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
