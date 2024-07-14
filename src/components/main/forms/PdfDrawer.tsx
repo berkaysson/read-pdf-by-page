@@ -15,8 +15,8 @@ function PdfDrawer() {
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button variant="default">
-          <FilePlus2 className="w-4 h-4 mr-2" /> Add PDF
+        <Button variant="outline" size="sm">
+          <FilePlus2 className="w-4 h-4 mr-2" /> Add New PDF
         </Button>
       </DrawerTrigger>
       <DrawerContent>
