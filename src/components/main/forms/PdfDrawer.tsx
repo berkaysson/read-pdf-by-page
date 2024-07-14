@@ -14,9 +14,9 @@ import { AddNewPDF } from "./AddNewPDF";
 function PdfDrawer() {
   return (
     <Drawer>
-      <DrawerTrigger asChild className="fixed right-4 top-4">
-        <Button variant="default" size={"icon"}>
-          <FilePlus2 size={25} />
+      <DrawerTrigger asChild>
+        <Button variant="default">
+          <FilePlus2 className="w-4 h-4 mr-2" /> Add PDF
         </Button>
       </DrawerTrigger>
       <DrawerContent>

@@ -3,43 +3,16 @@ import { ProfileProvider } from "./context/profile.context";
 import { Layout } from "./components/routes/Layout";
 import { Navbar } from "./components/navigation/Navbar";
 import { PDFProvider } from "./context/pdf.context";
-import { useEffect, useRef, useState } from "react";
-import PdfDrawer from "./components/main/forms/PdfDrawer";
 
 function App() {
-  const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
-  const navRef = useRef<HTMLElement | null>(null);
-
-  const handleOutsideClick = (event: MouseEvent) => {
-    if (isNavOpen && !navRef.current?.contains(event.target as Node)) {
-      setIsNavOpen(false);
-    }
-  };
-  useEffect(() => {
-    document.addEventListener("click", handleOutsideClick);
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <div className="h-screen bg-secondary">
       <ProfileProvider>
         <PDFProvider>
           <BrowserRouter>
-            <main className="flex flex-row flex-1 text-primary bg-secondary">
-              <div>
-                <PdfDrawer />
-              </div>
-              <div>
-                <Navbar
-                  isNavOpen={isNavOpen}
-                  navRef={navRef}
-                  setIsNavOpen={setIsNavOpen}
-                />
-              </div>
-              <section className="w-full h-full p-6">
+            <main className="flex flex-col flex-1 text-primary bg-secondary">
+              <Navbar />
+              <section className="w-full h-full p-6 mt-8">
                 <h2 className="mt-8 text-xl">
                   <span className="text-2xl font-bold">RPBP</span> (Read PDF By
                   Page) is a web application that allows users to read PDF files
