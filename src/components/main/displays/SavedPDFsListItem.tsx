@@ -15,8 +15,13 @@ interface PDFItemProps {
 
 const SavedPDFsListItem: React.FC<PDFItemProps> = ({ pdfItem }) => {
   const { profile, deletePdf } = useContext(ProfileContext);
-  const { setNewPDF, isFileLoading, setFileLoadingType, setIsFileLoading } =
-    useContext(PDFContext);
+  const {
+    setNewPDF,
+    isFileLoading,
+    setFileLoadingType,
+    setIsFileLoading,
+    setProgress,
+  } = useContext(PDFContext);
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleDelete = (pdf: SavedPdf) => {
@@ -29,7 +34,10 @@ const SavedPDFsListItem: React.FC<PDFItemProps> = ({ pdfItem }) => {
     setIsFileLoading(true);
     setFileLoadingType("Downloading...");
     const downloadedPdf = await getPdfFromStorage(profile, pdf, storage);
-    if (downloadedPdf) setNewPDF(downloadedPdf);
+    if (downloadedPdf) {
+      setProgress(50);
+      setNewPDF(downloadedPdf);
+    }
   };
 
   const handleDeleteButtonClick = (
