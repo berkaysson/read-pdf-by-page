@@ -4,6 +4,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -27,6 +28,7 @@ function PdfDrawer() {
         <div className="w-full max-w-sm mx-auto">
           <DrawerHeader>
             <DrawerTitle>Add New Document</DrawerTitle>
+            <DrawerDescription>Click plus button to add new PDF</DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">
             <AddNewPDF />
