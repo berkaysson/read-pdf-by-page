@@ -4,6 +4,7 @@ import { Layout } from "./components/routes/Layout";
 import { Navbar } from "./components/navigation/Navbar";
 import { PDFProvider } from "./context/pdf.context";
 import { useEffect, useRef, useState } from "react";
+import PdfDrawer from "./components/main/forms/PdfDrawer";
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
@@ -21,13 +22,16 @@ function App() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   return (
     <div className="h-screen bg-secondary">
       <ProfileProvider>
         <PDFProvider>
           <BrowserRouter>
             <main className="flex flex-row flex-1 text-primary bg-secondary">
+              <div>
+                <PdfDrawer />
+              </div>
               <div>
                 <Navbar
                   isNavOpen={isNavOpen}
