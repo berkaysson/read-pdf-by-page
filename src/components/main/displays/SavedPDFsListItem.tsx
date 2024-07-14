@@ -6,6 +6,8 @@ import { getPdfFromStorage } from "../../../utilities/pdfUtilities";
 import { ProfileContext } from "../../../context/profile.context";
 import { storage } from "../../../firebase.config";
 import AreYouSure from "../forms/AreYouSure";
+import { Button } from "../../../ui/button";
+import { FileDown, FileX2 } from "lucide-react";
 
 interface PDFItemProps {
   pdfItem: SavedPdf;
@@ -41,7 +43,7 @@ const SavedPDFsListItem: React.FC<PDFItemProps> = ({ pdfItem }) => {
     <li className="p-2 rounded-md shadow-sm bg-secondary" key={pdfItem.title}>
       <p className="overflow-x-auto whitespace-nowrap">{pdfItem.title}</p>
       <p className="font-bold">Page: {pdfItem.savedPage}</p>
-      {showConfirm ? (
+      {showConfirm && !isFileLoading ? (
         <span className="float-right mt-1">
           <AreYouSure
             message="Delete PDF"
@@ -50,23 +52,27 @@ const SavedPDFsListItem: React.FC<PDFItemProps> = ({ pdfItem }) => {
           />
         </span>
       ) : (
-        <button
+        <Button
           disabled={isFileLoading}
           onClick={(event) => handleDeleteButtonClick(event)}
-          className="float-right mt-1 btn btn-alt"
+          className="float-right mt-1"
           type="button"
+          variant={"destructive"}
+          size={"sm"}
         >
-          <FcDeleteDatabase className="text-lg" />{" "}
-        </button>
+          <FileX2 className="w-4 h-4" />
+        </Button>
       )}
-      <button
+      <Button
         type="button"
         disabled={isFileLoading}
-        className="float-right mt-1 mr-1 btn btn-alt"
+        className="float-right mt-1 mr-1"
         onClick={() => handleDownload(pdfItem)}
+        size={"sm"}
+        variant={"default"}
       >
-        <FcDownload className="text-lg" />{" "}
-      </button>
+        <FileDown className="w-4 h-4" />
+      </Button>
     </li>
   );
 };

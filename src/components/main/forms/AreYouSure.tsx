@@ -1,3 +1,5 @@
+import { CircleX } from "lucide-react";
+import { Button } from "../../../ui/button";
 import React from "react";
 
 interface AreYouSureProps {
@@ -22,20 +24,22 @@ const AreYouSure: React.FC<AreYouSureProps> = ({
   return (
     <div className="z-50">
       <div className="flex flex-row gap-1 mx-2">
-        <button
+        <Button
+          variant={"default"}
+          size={"sm"}
           type="button"
           onClick={(e) => handleClick(onCancel, e)}
-          className="btn"
         >
-          No
-        </button>
-        <button
+          <CircleX className="w-4 h-4" />
+        </Button>
+        <Button
+          variant={"destructive"}
+          size={"sm"}
           type="button"
           onClick={(e) => handleClick(onConfirm, e)}
-          className="btn btn-alt"
         >
           {message}
-        </button>
+        </Button>
       </div>
     </div>
   );

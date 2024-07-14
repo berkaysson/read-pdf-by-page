@@ -13,9 +13,9 @@ export const SavedPDFsList: React.FC = () => {
   }
 
   return (
-    <ul className="flex flex-col gap-2 px-1 py-2 overflow-y-scroll border-2 rounded-md shadow-md border-secondary">
+    <ul className="flex flex-col gap-2 p-1 overflow-y-scroll rounded-sm shadow-sm">
       {savedPdfsList?.length === 0 && (
-        <li className="text-center">No saved PDFs</li>
+        <li className="text-center">You have no saved PDFs</li>
       )}
       {savedPdfsList?.map((pdfItem) => (
         <SavedPDFsListItem key={pdfItem.title} pdfItem={pdfItem} />

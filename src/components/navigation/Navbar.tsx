@@ -7,6 +7,7 @@ import PdfDrawer from "../main/forms/PdfDrawer";
 import { Button } from "../../ui/button";
 import { LogOut } from "lucide-react";
 import { logout } from "../../utilities/signOutUtilities";
+import PdfListSheet from "../main/displays/PdfListSheet";
 
 export const Navbar = () => {
   return (
@@ -19,7 +20,15 @@ export const Navbar = () => {
           <PdfDrawer />
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Button type="button" onClick={logout} variant="destructive" size={"sm"}>
+          <PdfListSheet />
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Button
+            type="button"
+            onClick={logout}
+            variant="destructive"
+            size={"sm"}
+          >
             <LogOut className="w-4 h-4 mr-2" /> Log Out
           </Button>
         </NavigationMenuItem>
