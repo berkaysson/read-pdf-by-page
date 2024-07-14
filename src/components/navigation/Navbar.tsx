@@ -8,31 +8,39 @@ import { Button } from "../../ui/button";
 import { LogOut } from "lucide-react";
 import { logout } from "../../utilities/signOutUtilities";
 import PdfListSheet from "../main/displays/PdfListSheet";
+import { ProfileContext } from "../../context/profile.context";
+import { useContext } from "react";
 
 export const Navbar = () => {
+  const { profile } = useContext(ProfileContext);
   return (
-    <NavigationMenu
-      aria-hidden="true"
-      className="fixed p-2 m-2 rounded-md shadow-sm bg-primary"
-    >
-      <NavigationMenuList className="gap-4">
-        <NavigationMenuItem>
-          <PdfDrawer />
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <PdfListSheet />
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Button
-            type="button"
-            onClick={logout}
-            variant="destructive"
-            size={"sm"}
-          >
-            <LogOut className="w-4 h-4 mr-2" /> Log Out
-          </Button>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+    <>
+      {profile && (
+        <NavigationMenu
+          aria-hidden="true"
+          className="fixed p-2 m-2 rounded-md shadow-sm bg-primary"
+        >
+          <NavigationMenuList className="gap-4">
+            <NavigationMenuItem>
+              <PdfDrawer />
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <PdfListSheet />
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Button
+                type="button"
+                onClick={logout}
+                variant="destructive"
+                size={"sm"}
+              >
+                <LogOut className="w-4 h-4 mr-2" /> Log Out
+              </Button>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      )}
+    </>
   );
 };
