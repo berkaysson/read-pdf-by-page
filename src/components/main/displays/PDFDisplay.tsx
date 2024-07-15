@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PDFContext } from "../../../context/pdf.context";
+import GoUpButton from "../../navigation/GoUpButton";
 
 export const PDFDisplay: React.FC = () => {
   const [pages, setPages] = useState<string[]>([]);
@@ -35,6 +36,7 @@ export const PDFDisplay: React.FC = () => {
           </p>
         ))}
       </article>
+      <GoUpButton />
     </div>
   );
 };
