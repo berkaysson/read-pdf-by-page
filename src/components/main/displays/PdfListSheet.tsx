@@ -20,9 +20,9 @@ function PdfListSheet() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size={"sm"}>
-          <FileBadge className={`w-4 h-4 ${windowWidth < 425 ? "" : "mr-2"}`} />
-          {windowWidth < 425 ? "" : "Your PDFs"}
+        <Button variant="outline" size={"default"}>
+          <FileBadge className={`w-6 h-6 ${windowWidth < 470 ? "" : "mr-2"}`} />
+          {windowWidth < 470 ? "" : "Your PDFs"}
         </Button>
       </SheetTrigger>
       <SheetContent>

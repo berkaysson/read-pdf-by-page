@@ -14,11 +14,11 @@ export const ResetPDF = () => {
         type="button"
         onClick={resetPDF}
         variant="secondary"
-        size={"sm"}
+        size={"default"}
         disabled={isFileLoading || !activePDFTitle}
       >
-        <ListRestart className={`w-4 h-4 ${windowWidth < 425 ? "" : "mr-2"}`} />
-        {windowWidth < 425 ? "" : "Reset"}
+        <ListRestart className={`w-6 h-6 ${windowWidth < 470 ? "" : "mr-2"}`} />
+        {windowWidth < 470 ? "" : "Reset"}
       </Button>
     </div>
   );

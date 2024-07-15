@@ -35,12 +35,12 @@ export const Navbar = () => {
                 type="button"
                 onClick={logout}
                 variant="destructive"
-                size={"sm"}
+                size={"default"}
               >
                 <LogOut
-                  className={`w-4 h-4 ${windowWidth < 425 ? "" : "mr-2"}`}
+                  className={`w-6 h-6 ${windowWidth < 470 ? "" : "mr-2"}`}
                 />
-                {windowWidth < 425 ? "" : "Logout"}
+                {windowWidth < 470 ? "" : "Logout"}
               </Button>
             </NavigationMenuItem>
           </NavigationMenuList>

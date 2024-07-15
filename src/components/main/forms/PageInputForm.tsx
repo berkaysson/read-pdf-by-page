@@ -43,7 +43,7 @@ export const PageInputForm = () => {
 
   return (
     <div className="flex flex-row ml-2">
-      <form className="flex flex-row space-x-1">
+      <form className="flex flex-row items-center space-x-1">
         <Input
           disabled={!activePDFTitle}
           type="number"
@@ -53,19 +53,19 @@ export const PageInputForm = () => {
           name="pageNum"
           value={pageNumber || ""}
           onChange={handlePageNumberChange}
-          className="w-14 placeholder:text-xs opacity-90 focus:opacity-100"
+          className="w-12 placeholder:text-xs opacity-90 focus:opacity-100"
         />
         <Button
           variant={"secondary"}
           onClick={handleSavePageButton}
           type="button"
-          size={"sm"}
+          size={"default"}
           disabled={!pageNumber || !activePDFTitle}
         >
           <BookMarked
-            className={`w-4 h-4 ${windowWidth < 425 ? "" : "mr-2"}`}
+            className={`w-6 h-6 ${windowWidth < 470 ? "" : "mr-2"}`}
           />
-          {windowWidth < 425 ? "" : "Save"}
+          {windowWidth < 470 ? "" : "Save"}
         </Button>
       </form>
     </div>
