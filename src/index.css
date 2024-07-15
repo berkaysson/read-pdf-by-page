@@ -46,3 +46,9 @@ input[type="file"] {
   background-color: #352b00;
   border-radius: 5px;
 }
+
+.break-words {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}

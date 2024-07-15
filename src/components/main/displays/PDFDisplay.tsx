@@ -27,7 +27,7 @@ export const PDFDisplay: React.FC = () => {
           <p
             key={"p" + index}
             id={"page-" + (index + 1)}
-            className={index + 1 >= activePDFPage ? " bg-light px-4 py-10 rounded-sm shadow-inner" : "hide-page"}
+            className={index + 1 >= activePDFPage ? "break-words bg-light px-4 py-10 rounded-sm shadow-inner" : "hide-page"}
             lang="tr"
           >
             {page}
