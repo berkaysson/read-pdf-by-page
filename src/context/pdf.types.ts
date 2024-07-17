@@ -21,4 +21,6 @@ export interface PDFContextType {
   setProgress: Dispatch<SetStateAction<number>>;
   setFileLoadingType: Dispatch<SetStateAction<FileLoadingType>>;
   fileLoadingType: FileLoadingType;
+  renderingPage: number;
+  setRenderingPage: Dispatch<SetStateAction<number>>;
 }

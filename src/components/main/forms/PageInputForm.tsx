@@ -8,7 +8,8 @@ import useWindowWidth from "../../../hooks/useWindowWidth";
 
 export const PageInputForm = () => {
   const [pageNumber, setPageNumber] = useState<number | null>(null);
-  const { activePDFTitle, setActivePDFPage } = useContext(PDFContext);
+  const { activePDFTitle, activePDFPage, setRenderingPage } =
+    useContext(PDFContext);
   const { updatePageOfPdf } = useContext(ProfileContext);
   const windowWidth = useWindowWidth();
 
@@ -28,9 +29,7 @@ export const PageInputForm = () => {
   };
 
   useEffect(() => {
-    if (pageNumber) {
-      setActivePDFPage(pageNumber);
-    }
+    if (pageNumber) setRenderingPage(pageNumber);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNumber]);
 
@@ -40,6 +39,13 @@ export const PageInputForm = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activePDFTitle]);
+
+  useEffect(() => {
+    if (activePDFPage) {
+      setPageNumber(activePDFPage);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePDFPage]);
 
   return (
     <div className="flex flex-row">

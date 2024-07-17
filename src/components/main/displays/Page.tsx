@@ -1,18 +1,18 @@
 const Page = ({
   page,
   index,
-  activePDFPage,
+  renderingPage,
 }: {
   page: string;
   index: number;
-  activePDFPage: number;
+  renderingPage: number;
 }) => {
   return (
     <p
       key={"p" + index}
       id={"page-" + (index + 1)}
       className={
-        index + 1 >= activePDFPage
+        index + 1 >= renderingPage
           ? "break-words bg-light px-4 py-10 bg-white shadow-md max-w-4xl md:px-8 md:py-12"
           : "hide-page"
       }

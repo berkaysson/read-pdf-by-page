@@ -4,7 +4,7 @@ import Page from "./Page";
 
 export const PDFDisplay: React.FC = () => {
   const [pages, setPages] = useState<string[]>([]);
-  const { activePDFContent, activePDFTitle, activePDFPage } =
+  const { activePDFContent, activePDFTitle, activePDFPage, renderingPage } =
     useContext(PDFContext);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export const PDFDisplay: React.FC = () => {
             key={"Page" + index}
             index={index}
             page={page}
-            activePDFPage={activePDFPage}
+            renderingPage={renderingPage}
           />
         ))}
       </article>
