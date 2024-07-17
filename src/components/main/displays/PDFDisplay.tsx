@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PDFContext } from "../../../context/pdf.context";
-import GoUpButton from "../../navigation/GoUpButton";
 import Page from "./Page";
 
 export const PDFDisplay: React.FC = () => {
@@ -36,7 +35,6 @@ export const PDFDisplay: React.FC = () => {
           />
         ))}
       </article>
-      <GoUpButton />
     </div>
   );
 };

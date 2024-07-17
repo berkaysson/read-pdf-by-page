@@ -12,6 +12,7 @@ import { Button } from "../../ui/button";
 import { FileUp } from "lucide-react";
 import { ResetPDF } from "../main/forms/ResetPDF";
 import useWindowWidth from "../../hooks/useWindowWidth";
+import GoUpButton from "./GoUpButton";
 
 const PdfMenuBar = () => {
   const { handleAddSavedPdf } = useContext(ProfileContext);
@@ -43,7 +44,7 @@ const PdfMenuBar = () => {
   return (
     <NavigationMenu
       aria-hidden="true"
-      className="fixed bottom-0 left-0 p-2 m-2 rounded-md shadow-sm bg-primary"
+      className="fixed bottom-0 p-2 mb-2 -translate-x-1/2 rounded-md shadow-sm left-1/2 bg-primary"
     >
       <NavigationMenuList>
         <NavigationMenuItem>
@@ -65,6 +66,7 @@ const PdfMenuBar = () => {
           <PageInputForm />
         </NavigationMenuItem>
       </NavigationMenuList>
+      <GoUpButton />
     </NavigationMenu>
   );
 };

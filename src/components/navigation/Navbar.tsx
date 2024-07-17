@@ -21,7 +21,7 @@ export const Navbar = () => {
       {profile && (
         <NavigationMenu
           aria-hidden="true"
-          className="fixed p-2 m-2 rounded-md shadow-sm bg-primary"
+          className="fixed p-2 m-2 -translate-x-1/2 rounded-md shadow-sm bg-primary left-1/2"
         >
           <NavigationMenuList className="gap-4">
             <NavigationMenuItem>

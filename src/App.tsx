@@ -13,7 +13,7 @@ function App() {
             <main className="flex flex-col flex-1 text-primary bg-secondary">
               <Navbar />
               <section className="w-full h-full p-4 mt-8">
-                <h2 className="mt-8 text-md sm:text-xl">
+                <h2 className="mt-8 text-center text-md sm:text-xl">
                   <span className="text-xl font-bold sm:text-2xl">RPBP</span> (Read PDF By
                   Page) is a web application that allows users to read PDF files
                   by page.

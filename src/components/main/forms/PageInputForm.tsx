@@ -42,7 +42,7 @@ export const PageInputForm = () => {
   }, [activePDFTitle]);
 
   return (
-    <div className="flex flex-row ml-2">
+    <div className="flex flex-row">
       <form className="flex flex-row items-center space-x-1">
         <Input
           disabled={!activePDFTitle}
@@ -53,7 +53,7 @@ export const PageInputForm = () => {
           name="pageNum"
           value={pageNumber || ""}
           onChange={handlePageNumberChange}
-          className="w-12 placeholder:text-xs opacity-90 focus:opacity-100"
+          className="w-14 placeholder:text-xs opacity-90 focus:opacity-100"
         />
         <Button
           variant={"secondary"}

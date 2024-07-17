@@ -34,7 +34,7 @@ const GoUpButton = () => {
         <Button
           variant={"secondary"}
           size={"icon"}
-          className="fixed border-2 bottom-4 right-4 border-slate-800"
+          className="ml-1 border-slate-800"
           onClick={scrollToTop}
         >
           <ArrowUp className="w-6 h-6" />
