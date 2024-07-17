@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PDFContext } from "../../../context/pdf.context";
 import GoUpButton from "../../navigation/GoUpButton";
+import Page from "./Page";
 
 export const PDFDisplay: React.FC = () => {
   const [pages, setPages] = useState<string[]>([]);
@@ -16,24 +17,23 @@ export const PDFDisplay: React.FC = () => {
   }, [activePDFContent]);
 
   return (
-    <div className="mt-8 mb-24">
+    <div className="flex flex-col items-center w-full mt-8 mb-24">
       <div>
         <h3 className="mb-4 text-2xl font-semibold">
           {activePDFTitle && `${activePDFTitle} - ${activePDFPage}`}
         </h3>
       </div>
-      <article className="flex flex-col gap-4 text-justify bg-secondary">
-        {pages.length<1 && <span className="italic shadow-inner">Add new PDF Please</span>}
+      <article className="flex flex-col gap-4 text-justify">
+        {pages.length < 1 && (
+          <span className="italic shadow-inner">Add new PDF Please</span>
+        )}
         {pages.map((page, index) => (
-          <p
-            key={"p" + index}
-            id={"page-" + (index + 1)}
-            className={index + 1 >= activePDFPage ? "break-words bg-light px-4 py-10 rounded-sm shadow-inner" : "hide-page"}
-            lang="tr"
-          >
-            {page}
-            <span aria-hidden="true" className="float-right mt-6 mr-2 text-sm italic" key={"pageNum-" + index}>{index + 1}</span>
-          </p>
+          <Page
+            key={"Page" + index}
+            index={index}
+            page={page}
+            activePDFPage={activePDFPage}
+          />
         ))}
       </article>
       <GoUpButton />
