@@ -42,7 +42,7 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
     setProgress: Dispatch<SetStateAction<number>>
   ) => {
     if (profile) {
-      const updatedProfile = await addSavedPdf(
+      const { profile: updatedProfile, success } = await addSavedPdf(
         database,
         profile,
         newPdf,
@@ -50,6 +50,22 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
         storage,
         setProgress
       );
+
+      if (!success) {
+        toast({
+          title: "Error",
+          description: "Pdf already exists or failed to upload.",
+          variant: "destructive",
+          duration: 3000,
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: "Pdf uploaded successfully.",
+          duration: 3000,
+        });
+      }
+
       setProfile(updatedProfile);
     }
   };

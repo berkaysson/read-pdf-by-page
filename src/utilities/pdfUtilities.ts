@@ -47,10 +47,10 @@ export const addSavedPdf = async (
     await set(ref(database, `users/${uid}`), updatedProfile);
     setProgress(99);
 
-    return updatedProfile;
+    return { profile: updatedProfile, success: true };
   }
 
-  return profile;
+  return { profile, success: false };
 };
 
 export const updateSavedPdfSavedPage = (
