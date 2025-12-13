@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { PDFContext } from "../../../context/pdf.context";
 import { Card } from "../../../ui/card";
 
+import { toast } from "../../../ui/use-toast";
+
 export const AddNewPDF = () => {
   const { setNewPDF, isFileLoading, progress, fileLoadingType } =
     useContext(PDFContext);
@@ -10,6 +12,15 @@ export const AddNewPDF = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
+      if (files[0].size > 10 * 1024 * 1024) {
+        toast({
+          title: "File too large",
+          description: "Please select a file smaller than 10MB.",
+          variant: "destructive",
+        });
+        e.target.value = "";
+        return;
+      }
       setSelectedPdf(files[0]);
     }
   };
