@@ -13,7 +13,7 @@ const Page = ({
       id={"page-" + (index + 1)}
       className={
         index + 1 >= renderingPage
-          ? "break-words bg-light px-4 py-10 bg-white shadow-md max-w-4xl md:px-8 md:py-12"
+          ? "break-words bg-card text-card-foreground px-4 py-10 shadow-md border border-border max-w-4xl md:px-8 md:py-12"
           : "hide-page"
       }
       lang="tr"
