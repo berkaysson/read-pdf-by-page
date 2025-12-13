@@ -11,6 +11,7 @@ import PdfListSheet from "../main/displays/PdfListSheet";
 import { ProfileContext } from "../../context/profile.context";
 import { useContext } from "react";
 import useWindowWidth from "../../hooks/useWindowWidth";
+import { ModeToggle } from "./ModeToggle";
 
 export const Navbar = () => {
   const { profile } = useContext(ProfileContext);
@@ -29,6 +30,9 @@ export const Navbar = () => {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <PdfListSheet />
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <ModeToggle />
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Button
