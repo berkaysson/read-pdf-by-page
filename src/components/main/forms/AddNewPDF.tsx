@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PDFContext } from "../../../context/pdf.context";
+import { ProfileContext } from "../../../context/profile.context";
 import { Card } from "../../../ui/card";
 
 import { toast } from "../../../ui/use-toast";
@@ -7,11 +8,26 @@ import { toast } from "../../../ui/use-toast";
 export const AddNewPDF = () => {
   const { setNewPDF, isFileLoading, progress, fileLoadingType } =
     useContext(PDFContext);
+  const { profile } = useContext(ProfileContext);
   const [selectedPdf, setSelectedPdf] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
+      const isException = profile?.email === "berkaysonel85@gmail.com";
+      const pdfCount = profile?.savedPdfs?.length || 0;
+
+      if (pdfCount >= 5 && !isException) {
+        toast({
+          title: "Limit Reached",
+          description:
+            "You have reached the limit of 5 PDFs. Please delete some to upload more.",
+          variant: "destructive",
+        });
+        e.target.value = "";
+        return;
+      }
+
       if (files[0].size > 10 * 1024 * 1024) {
         toast({
           title: "File too large",
