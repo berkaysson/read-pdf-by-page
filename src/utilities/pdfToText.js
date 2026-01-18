@@ -1,10 +1,7 @@
 import { pdfjs } from "react-pdf";
 
 // Path to the pdf.worker.js file
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url,
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const pdfToText = async (file, setProgress) => {
   try {
