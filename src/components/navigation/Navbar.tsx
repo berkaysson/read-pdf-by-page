@@ -12,6 +12,7 @@ import { ProfileContext } from "../../context/profile.context";
 import { useContext } from "react";
 import useWindowWidth from "../../hooks/useWindowWidth";
 import { ModeToggle } from "./ModeToggle";
+import { HowToUseDialog } from "./HowToUseDialog";
 
 export const Navbar = () => {
   const { profile } = useContext(ProfileContext);
@@ -46,6 +47,9 @@ export const Navbar = () => {
                 />
                 {windowWidth < 470 ? "" : "Logout"}
               </Button>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <HowToUseDialog />
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
