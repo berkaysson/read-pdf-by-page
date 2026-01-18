@@ -6,6 +6,7 @@ import {
   createContext,
   useMemo,
   useState,
+  useCallback,
 } from "react";
 import { auth, database, storage } from "../firebase.config";
 import { ProfileContextType, SavedPdf, UserProfile } from "./profile.types";
@@ -36,83 +37,92 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
 
   useAuthListener(auth, database, setProfile, setIsLoading);
 
-  const handleAddSavedPdf = async (
-    newPdf: SavedPdf,
-    content: string[],
-    setProgress: Dispatch<SetStateAction<number>>,
-  ) => {
-    if (profile) {
-      const {
-        profile: updatedProfile,
-        success,
-        message,
-      } = await addSavedPdf(
-        database,
-        profile,
-        newPdf,
-        content,
-        storage,
-        setProgress,
-      );
+  const handleAddSavedPdf = useCallback(
+    async (
+      newPdf: SavedPdf,
+      content: string[],
+      setProgress: Dispatch<SetStateAction<number>>,
+    ) => {
+      if (profile) {
+        const {
+          profile: updatedProfile,
+          success,
+          message,
+        } = await addSavedPdf(
+          database,
+          profile,
+          newPdf,
+          content,
+          storage,
+          setProgress,
+        );
 
-      if (!success) {
-        toast({
-          title: "Error",
-          description: message || "Pdf already exists or failed to upload.",
-          variant: "destructive",
-          duration: 3000,
-        });
-      } else {
-        toast({
-          title: "Success",
-          description: "Pdf uploaded successfully.",
-          duration: 3000,
-        });
+        if (!success) {
+          toast({
+            title: "Error",
+            description: message || "Pdf already exists or failed to upload.",
+            variant: "destructive",
+            duration: 3000,
+          });
+        } else {
+          toast({
+            title: "Success",
+            description: "Pdf uploaded successfully.",
+            duration: 3000,
+          });
+        }
+
+        setProfile(updatedProfile);
       }
+    },
+    [profile, toast],
+  );
 
-      setProfile(updatedProfile);
-    }
-  };
+  const updatePageOfPdf = useCallback(
+    (title: string, page: number) => {
+      if (profile) {
+        const { profile: updatedProfile, success } = updateSavedPdfSavedPage(
+          title,
+          page,
+          database,
+          profile,
+        );
 
-  const updatePageOfPdf = (title: string, page: number) => {
-    if (profile) {
-      const { profile: updatedProfile, success } = updateSavedPdfSavedPage(
-        title,
-        page,
-        database,
-        profile,
-      );
+        if (!success) {
+          toast({
+            title: "Error",
+            description: "Please make sure you uploaded the Pdf first.",
+            variant: "destructive",
+            duration: 3000,
+          });
+        } else {
+          toast({
+            title: "Success",
+            description: "Page saved successfully.",
+            duration: 3000,
+          });
+        }
 
-      if (!success) {
-        toast({
-          title: "Error",
-          description: "Please make sure you uploaded the Pdf first.",
-          variant: "destructive",
-          duration: 3000,
-        });
-      } else {
-        toast({
-          title: "Success",
-          description: "Page saved successfully.",
-          duration: 3000,
-        });
+        setProfile(updatedProfile);
       }
+    },
+    [profile, toast],
+  );
 
-      setProfile(updatedProfile);
-    }
-  };
-
-  const deletePdf = async (pdf: SavedPdf) => {
-    if (profile) {
-      const updatedProfile = await deleteSavedPdf(
-        pdf,
-        database,
-        profile,
-        storage,
-      );
-      setProfile(updatedProfile);
-    }
-  };
+  const deletePdf = useCallback(
+    async (pdf: SavedPdf) => {
+      if (profile) {
+        const updatedProfile = await deleteSavedPdf(
+          pdf,
+          database,
+          profile,
+          storage,
+        );
+        setProfile(updatedProfile);
+      }
+    },
+    [profile],
+  );
 
   const contextValue = useMemo(
     () => ({
@@ -121,9 +131,8 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
       handleAddSavedPdf,
       updatePageOfPdf,
       deletePdf,
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }),
-    [profile, isLoading],
+    [profile, isLoading, handleAddSavedPdf, updatePageOfPdf, deletePdf],
   );
 
   return (

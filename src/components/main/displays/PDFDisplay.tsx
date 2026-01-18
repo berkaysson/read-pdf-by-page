@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PDFContext } from "../../../context/pdf.context";
 import Page from "./Page";
+import { HowToUseDialog } from "../../navigation/HowToUseDialog";
 
 export const PDFDisplay: React.FC = () => {
   const [pages, setPages] = useState<string[]>([]);
@@ -26,14 +27,18 @@ export const PDFDisplay: React.FC = () => {
         style={{ width: `${progressPercentage}%` }}
       />
       <div>
-        <h3 className="mb-4 text-2xl font-semibold">
-          {activePDFTitle && `${activePDFTitle}`} - {activePDFPage}/
-          {pages.length} - %{progressPercentage.toFixed(0)}
-        </h3>
+        {activePDFTitle && (
+          <h3 className="mb-4 text-2xl font-semibold">
+            {activePDFTitle && `${activePDFTitle}`} - {activePDFPage}/
+            {pages.length} - %{progressPercentage.toFixed(0)}
+          </h3>
+        )}
       </div>
-      <article className="flex flex-col gap-4 text-justify">
+      <article className="flex flex-col gap-4 text-justify ">
         {pages.length < 1 && (
-          <span className="italic shadow-inner">Add new PDF Please</span>
+          <span className="italic shadow-inner">
+            Add new PDF Please <HowToUseDialog />
+          </span>
         )}
         {pages.map((page, index) => (
           <Page
