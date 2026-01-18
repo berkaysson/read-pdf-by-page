@@ -101,14 +101,16 @@ export function HowToUseDialog() {
             </div>
           </div>
 
-          {/* Step 4: Edge Read Aloud */}
+          <div className="w-full h-1 my-2 bg-border/100" />
+
+          {/* Edge Read Aloud */}
           <div className="flex items-start gap-4 p-4 transition-all duration-300 border group rounded-xl border-border/40 bg-card/50 hover:bg-muted/30 hover:shadow-sm hover:border-primary/20">
             <div className="flex items-center justify-center w-12 h-12 transition-all duration-300 rounded-full shrink-0 bg-rose-500/10 text-rose-500 ring-4 ring-rose-500/5 group-hover:ring-rose-500/10">
               <Smartphone className="w-6 h-6" />
             </div>
             <div className="space-y-1.5">
               <h3 className="font-semibold leading-none tracking-tight text-foreground">
-                4. Edge Read Aloud (Mobile)
+                Edge Read Aloud (Mobile)
               </h3>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 If reading doesn't start: Open app{" "}
