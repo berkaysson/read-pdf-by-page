@@ -19,14 +19,51 @@ export const addSavedPdf = async (
   newPdf: SavedPdf,
   content: string[],
   storage: FirebaseStorage,
-  setProgress: Dispatch<SetStateAction<number>>
+  setProgress: Dispatch<SetStateAction<number>>,
 ) => {
   if (!profile || !content) {
     throw new Error("Profile or file is null");
   }
 
+  // LIMITATIONS
+  const MAX_FILES = 5;
+  const MAX_TOTAL_STORAGE_MB = 100; // 100MB
+  const MAX_FILE_SIZE_MB = 20; // 20MB
+  const BYTES_PER_MB = 1024 * 1024;
+
+  // 1. Check File Count
+  if (profile.savedPdfs.length >= MAX_FILES) {
+    return {
+      profile,
+      success: false,
+      message: `You can only upload up to ${MAX_FILES} files.`,
+    };
+  }
+
+  // 2. Check Single File Size
+  if (newPdf.size > MAX_FILE_SIZE_MB * BYTES_PER_MB) {
+    return {
+      profile,
+      success: false,
+      message: `File size exceeds the limit of ${MAX_FILE_SIZE_MB}MB.`,
+    };
+  }
+
+  // 3. Check Total Storage
+  const currentTotalSize = profile.savedPdfs.reduce(
+    (acc, pdf) => acc + (pdf.size || 0),
+    0,
+  );
+  if (currentTotalSize + newPdf.size > MAX_TOTAL_STORAGE_MB * BYTES_PER_MB) {
+    return {
+      profile,
+      success: false,
+      message: `Total storage limit of ${MAX_TOTAL_STORAGE_MB}MB exceeded.`,
+    };
+  }
+
   const existingPdfIndex = profile.savedPdfs.findIndex(
-    (pdf) => pdf.title === newPdf.title
+    (pdf) => pdf.title === newPdf.title,
   );
 
   if (existingPdfIndex === -1) {
@@ -38,7 +75,7 @@ export const addSavedPdf = async (
       content,
       storage,
       setProgress,
-      newPdf.title
+      newPdf.title,
     );
 
     const updatedPdfs = [...profile.savedPdfs, { ...newPdf, downloadURL }];
@@ -50,17 +87,17 @@ export const addSavedPdf = async (
     return { profile: updatedProfile, success: true };
   }
 
-  return { profile, success: false };
+  return { profile, success: false, message: "PDF already exists." };
 };
 
 export const updateSavedPdfSavedPage = (
   pdfTitle: string,
   newPdfPage: number,
   database: Database,
-  profile: UserProfile
+  profile: UserProfile,
 ) => {
   const existingPdfIndex = profile.savedPdfs.findIndex(
-    (pdf) => pdf.title === pdfTitle
+    (pdf) => pdf.title === pdfTitle,
   );
 
   if (existingPdfIndex === -1) {
@@ -86,14 +123,14 @@ export const deleteSavedPdf = async (
   pdf: SavedPdf,
   database: Database,
   profile: UserProfile,
-  storage: FirebaseStorage
+  storage: FirebaseStorage,
 ) => {
   if (!profile || !storage) {
     throw new Error("Profile or storage is null");
   }
 
   const existingPdfIndex = profile.savedPdfs.findIndex(
-    (_pdf) => _pdf.title === pdf.title
+    (_pdf) => _pdf.title === pdf.title,
   );
   if (existingPdfIndex < 0) {
     alert("Pdf is not existing in database.");
@@ -118,7 +155,7 @@ export const deleteSavedPdf = async (
 export const getPdfFromStorage = async (
   profile: UserProfile,
   pdf: SavedPdf,
-  storage: FirebaseStorage
+  storage: FirebaseStorage,
 ): Promise<File | null> => {
   if (!profile || !profile.uid || !pdf.title) {
     console.error("Error retrieving PDF from storage: Invalid input");
@@ -140,7 +177,7 @@ const uploadPdf = async (
   content: string[],
   storage: FirebaseStorage,
   setProgress: Dispatch<SetStateAction<number>>,
-  fileName: string
+  fileName: string,
 ): Promise<string> => {
   if (userId === null) {
     throw new Error("userId is null");
@@ -154,7 +191,7 @@ const uploadPdf = async (
 
   const _storageRef: StorageReference = storageRef(
     storage,
-    `files/${userId}/${fileName}`
+    `files/${userId}/${fileName}`,
   );
 
   const contentBlob = new Blob([JSON.stringify(content)], {
@@ -171,7 +208,7 @@ const uploadPdf = async (
 
 const handleUploadTask = (
   uploadTask: UploadTask,
-  setProgress: Dispatch<SetStateAction<number>>
+  setProgress: Dispatch<SetStateAction<number>>,
 ) => {
   return new Promise<void>((resolve, reject) => {
     uploadTask.on(
@@ -182,7 +219,7 @@ const handleUploadTask = (
         setProgress(progress * 0.8);
       },
       reject,
-      resolve
+      resolve,
     );
   });
 };

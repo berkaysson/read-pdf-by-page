@@ -39,22 +39,26 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
   const handleAddSavedPdf = async (
     newPdf: SavedPdf,
     content: string[],
-    setProgress: Dispatch<SetStateAction<number>>
+    setProgress: Dispatch<SetStateAction<number>>,
   ) => {
     if (profile) {
-      const { profile: updatedProfile, success } = await addSavedPdf(
+      const {
+        profile: updatedProfile,
+        success,
+        message,
+      } = await addSavedPdf(
         database,
         profile,
         newPdf,
         content,
         storage,
-        setProgress
+        setProgress,
       );
 
       if (!success) {
         toast({
           title: "Error",
-          description: "Pdf already exists or failed to upload.",
+          description: message || "Pdf already exists or failed to upload.",
           variant: "destructive",
           duration: 3000,
         });
@@ -76,7 +80,7 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
         title,
         page,
         database,
-        profile
+        profile,
       );
 
       if (!success) {
@@ -104,7 +108,7 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
         pdf,
         database,
         profile,
-        storage
+        storage,
       );
       setProfile(updatedProfile);
     }
@@ -119,7 +123,7 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
       deletePdf,
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }),
-    [profile, isLoading]
+    [profile, isLoading],
   );
 
   return (

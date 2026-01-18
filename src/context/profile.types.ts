@@ -6,6 +6,7 @@ export interface SavedPdf {
   savedPage: number;
   updateDate: string;
   downloadURL: string;
+  size: number;
 }
 
 export interface UserProfile {
@@ -20,7 +21,7 @@ export interface ProfileContextType {
   handleAddSavedPdf: (
     newPdf: SavedPdf,
     file: string[],
-    setProgress: Dispatch<SetStateAction<number>>
+    setProgress: Dispatch<SetStateAction<number>>,
   ) => void;
   updatePageOfPdf: (title: string, page: number) => void;
   deletePdf: (pdf: SavedPdf, storage: FirebaseStorage) => void;

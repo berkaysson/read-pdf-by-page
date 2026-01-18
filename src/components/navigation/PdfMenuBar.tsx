@@ -9,7 +9,7 @@ import { PDFContext } from "../../context/pdf.context";
 import { ProfileContext } from "../../context/profile.context";
 import { SavedPdf } from "../../context/profile.types";
 import { Button } from "../../ui/button";
-import { FileUp, Info, StopCircle, Volume2 } from "lucide-react";
+import { FileUp, StopCircle, Volume2 } from "lucide-react";
 import { ResetPDF } from "../main/forms/ResetPDF";
 import useWindowWidth from "../../hooks/useWindowWidth";
 import GoUpButton from "./GoUpButton";
@@ -60,7 +60,7 @@ const PdfMenuBar = () => {
       (v) =>
         v.name.includes("Microsoft") &&
         v.name.includes("Natural") &&
-        v.lang.includes("en")
+        v.lang.includes("en"),
     );
 
     if (!selectedVoice) {
@@ -105,6 +105,7 @@ const PdfMenuBar = () => {
         savedPage: 0,
         updateDate: new Date().toISOString(),
         downloadURL: "",
+        size: new Blob([JSON.stringify(activePDFContent)]).size,
       };
       await handleAddSavedPdf(newPdf, activePDFContent, setProgress);
       setProgress(100);
