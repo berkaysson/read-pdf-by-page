@@ -23,4 +23,6 @@ export interface PDFContextType {
   fileLoadingType: FileLoadingType;
   renderingPage: number;
   setRenderingPage: Dispatch<SetStateAction<number>>;
+  error: string | null;
+  setError: Dispatch<SetStateAction<string | null>>;
 }

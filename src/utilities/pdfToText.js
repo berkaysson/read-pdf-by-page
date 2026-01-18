@@ -33,7 +33,7 @@ const pdfToText = async (file, setProgress) => {
     return extractedTextByPage;
   } catch (error) {
     console.error("Error extracting text from PDF:", error);
-    return [];
+    throw error;
   }
 };
 

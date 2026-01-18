@@ -27,6 +27,8 @@ export const PDFContext = createContext<PDFContextType>({
   fileLoadingType: "...",
   setRenderingPage: () => {},
   renderingPage: 1,
+  error: null,
+  setError: () => {},
 });
 
 interface PDFProviderProps {
@@ -37,7 +39,7 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
   const { profile } = useContext(ProfileContext);
 
   const [activePDFContent, setActivePDFContent] = useState<string[] | null>(
-    null
+    null,
   );
   const [activePDFTitle, setActivePDFTitle] = useState<string | null>(null);
   const [activePDFPage, setActivePDFPage] = useState<number>(0);
@@ -46,6 +48,7 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
   const [progress, setProgress] = useState(0);
   const [fileLoadingType, setFileLoadingType] =
     useState<FileLoadingType>("...");
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (profile) {
@@ -64,6 +67,7 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
     setProgress(0);
     setIsFileLoading(false);
     setFileLoadingType("...");
+    setError(null);
     setRenderingPage(1);
     const fileInput = document.getElementById("fileInput");
     if (fileInput instanceof HTMLInputElement) fileInput.value = "";
@@ -74,6 +78,7 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
       console.error("setNewPDF was called with a null File.");
       return;
     }
+    setError(null);
     setIsFileLoading(true);
     setFileLoadingType("Extracting text...");
     if (newPdf.type === "application/json") {
@@ -90,6 +95,8 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
         })
         .catch((error: Error) => {
           console.error("Failed to extract text from pdf", error);
+          setError(error.message || "Failed to extract text from PDF");
+          setIsFileLoading(false);
         });
     }
   };
@@ -112,6 +119,8 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
       fileLoadingType,
       renderingPage,
       setRenderingPage,
+      error,
+      setError,
     }),
     [
       activePDFContent,
@@ -121,7 +130,8 @@ export const PDFProvider = ({ children }: PDFProviderProps) => {
       progress,
       fileLoadingType,
       renderingPage,
-    ]
+      error,
+    ],
   );
 
   return (
