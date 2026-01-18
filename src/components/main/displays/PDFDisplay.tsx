@@ -15,11 +15,20 @@ export const PDFDisplay: React.FC = () => {
     }
   }, [activePDFContent]);
 
+  const progressPercentage =
+    pages.length > 0 ? (activePDFPage / pages.length) * 100 : 0;
+
   return (
     <div className="flex flex-col items-center w-full mt-8 mb-24">
+      {/* Scroll Progress Bar */}
+      <div
+        className="fixed top-0 left-0 z-50 h-1 transition-all duration-300 ease-out bg-primary"
+        style={{ width: `${progressPercentage}%` }}
+      />
       <div>
         <h3 className="mb-4 text-2xl font-semibold">
-          {activePDFTitle && `${activePDFTitle} - ${activePDFPage}`}
+          {activePDFTitle && `${activePDFTitle}`} - {activePDFPage}/
+          {pages.length} - %{progressPercentage.toFixed(0)}
         </h3>
       </div>
       <article className="flex flex-col gap-4 text-justify">
